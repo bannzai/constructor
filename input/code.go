@@ -27,6 +27,6 @@ func (impl CodeImpl) Read() raw.Code {
 	}
 	return raw.Code{
 		FilePath: impl.FilePath,
-		ASTFile:  astFile,
+		ASTFile:  *astFile,
 	}
 }
