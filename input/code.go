@@ -1,8 +1,6 @@
 package input
 
 import (
-	"fmt"
-	"go/ast"
 	"go/parser"
 	"go/token"
 	"io/ioutil"
@@ -24,7 +22,6 @@ func (impl CodeImpl) Read() raw.Code {
 	}
 	fileSet := token.NewFileSet()
 	astFile, err := parser.ParseFile(fileSet, impl.FilePath, buf, 0)
-	fmt.Printf("ast.Visitor = %+v\n", ast.Visitor)
 	if err != nil {
 		panic(err)
 	}
