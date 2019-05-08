@@ -7,6 +7,6 @@ type Code interface {
 }
 type CodeImpl struct{}
 
-func (CodeImpl) read() raw.Ast {
+func (CodeImpl) read() raw.Code {
 	return raw.Code{}
 }
