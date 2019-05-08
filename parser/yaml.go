@@ -4,12 +4,12 @@ import "github.com/constructor/input"
 
 type YamlParsedResult string
 type Yaml interface {
-	parse() YamlParsedResult
+	Parse() YamlParsedResult
 }
 type YamlImpl struct {
 	Input input.Yaml
 }
 
-func (impl CodeImpl) parse() YamlParsedResult {
+func (impl CodeImpl) Parse() YamlParsedResult {
 	return ""
 }

@@ -3,10 +3,10 @@ package input
 import "github.com/constructor/raw"
 
 type Code interface {
-	read() raw.Code
+	Read() raw.Code
 }
 type CodeImpl struct{}
 
-func (CodeImpl) read() raw.Code {
+func (CodeImpl) Read() raw.Code {
 	return raw.Code{}
 }

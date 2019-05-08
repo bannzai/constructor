@@ -3,10 +3,10 @@ package input
 import "github.com/constructor/raw"
 
 type Template interface {
-	read() raw.Template
+	Read() raw.Template
 }
 type TemplateImpl struct{}
 
-func (TemplateImpl) read() raw.Template {
+func (TemplateImpl) Read() raw.Template {
 	return raw.Template{}
 }

@@ -3,11 +3,11 @@ package input
 import "github.com/constructor/raw"
 
 type Yaml interface {
-	read() raw.Yaml
+	Read() raw.Yaml
 }
 
 type YamlImpl struct{}
 
-func (YamlImpl) read() raw.Yaml {
+func (YamlImpl) Read() raw.Yaml {
 	return raw.Yaml{}
 }

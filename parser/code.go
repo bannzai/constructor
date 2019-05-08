@@ -4,12 +4,12 @@ import "github.com/constructor/input"
 
 type CodeParsedResult string
 type Code interface {
-	parse() CodeParsedResult
+	Parse() CodeParsedResult
 }
 type CodeImpl struct {
 	Input input.Code
 }
 
-func (impl CodeImpl) parse() CodeParsedResult {
+func (impl CodeImpl) Parse() CodeParsedResult {
 	return ""
 }
