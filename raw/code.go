@@ -1,3 +1,6 @@
 package raw
 
-type Code struct{}
+// Code is presentation of .go file content.
+type Code struct {
+	FilePath Path
+}
