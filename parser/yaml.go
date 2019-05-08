@@ -10,6 +10,6 @@ type YamlImpl struct {
 	Input input.Yaml
 }
 
-func (impl CodeImpl) Parse() YamlParsedResult {
+func (impl YamlImpl) Parse() YamlParsedResult {
 	return ""
 }
