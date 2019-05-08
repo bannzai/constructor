@@ -17,6 +17,7 @@ type YamlImpl struct {
 	argument raw.Argument
 }
 
+// Read for yaml file
 func (impl YamlImpl) Read() raw.Yaml {
 	buf, err := ioutil.ReadFile(impl.argument.YamlPath)
 	if err != nil {
