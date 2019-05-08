@@ -1,6 +1,10 @@
 package output
 
 type Yaml interface {
-	output() string
+	Output() error
 }
 type YamlImpl struct{}
+
+func (YamlImpl) Output() error {
+
+}

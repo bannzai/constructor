@@ -1,6 +1,10 @@
 package output
 
 type Template interface {
-	output() string
+	Output() error
 }
 type TemplateImpl struct{}
+
+func (impl TemplateImpl) output() error {
+
+}

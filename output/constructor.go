@@ -1,3 +1,10 @@
 package output
 
-type Constructor struct{}
+type Constructor interface {
+	Output() error
+}
+type ConstructorImpl struct{}
+
+func (ConstructorImpl) Output() error {
+
+}
