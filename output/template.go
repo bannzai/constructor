@@ -1,3 +1,6 @@
 package output
 
-type Template struct{}
+type Template interface {
+	output() string
+}
+type TemplateImpl struct{}

@@ -1,12 +1,12 @@
 package input
 
-import "github.com/constructor/value"
+import "github.com/constructor/raw"
 
 type Code interface {
-	read() value.Ast
+	read() raw.Code
 }
 type CodeImpl struct{}
 
-func (CodeImpl) read() value.Ast {
-	return value.Ast{}
+func (CodeImpl) read() raw.Ast {
+	return raw.Code{}
 }

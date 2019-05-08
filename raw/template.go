@@ -1,3 +1,3 @@
-package value
+package raw
 
 type Template struct{}

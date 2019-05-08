@@ -1,12 +1,12 @@
 package input
 
-import "github.com/constructor/value"
+import "github.com/constructor/raw"
 
 type Template interface {
-	read() value.Template
+	read() raw.Template
 }
 type TemplateImpl struct{}
 
-func (TemplateImpl) read() value.Template {
-	return value.Template{}
+func (TemplateImpl) read() raw.Template {
+	return raw.Template{}
 }

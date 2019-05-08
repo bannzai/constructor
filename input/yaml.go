@@ -1,13 +1,13 @@
 package input
 
-import "github.com/constructor/value"
+import "github.com/constructor/raw"
 
 type Yaml interface {
-	read() value.Yaml
+	read() raw.Yaml
 }
 
 type YamlImpl struct{}
 
-func (YamlImpl) read() value.Yaml {
-	return value.Yaml{}
+func (YamlImpl) read() raw.Yaml {
+	return raw.Yaml{}
 }
