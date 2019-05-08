@@ -1,7 +1,7 @@
 package input
 
 import (
-	"reflect"
+	"fmt"
 	"testing"
 
 	"github.com/constructor/raw"
@@ -14,18 +14,23 @@ func TestYamlImpl_Read(t *testing.T) {
 	tests := []struct {
 		name   string
 		fields fields
-		want   raw.Yaml
 	}{
-		// TODO: Add test cases.
+		{
+			name: "Successfully read yaml file.",
+			fields: fields{
+				argument: raw.Argument{
+					YamlPath: "../constructor.yaml",
+				},
+			},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			impl := YamlImpl{
 				argument: tt.fields.argument,
 			}
-			if got := impl.Read(); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("YamlImpl.Read() = %v, want %v", got, tt.want)
-			}
+			got := impl.Read()
+			fmt.Printf("Successfully got: %v ", got)
 		})
 	}
 }
