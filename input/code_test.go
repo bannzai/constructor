@@ -1,11 +1,11 @@
 package input
 
 import (
-	"reflect"
+	"fmt"
 	"testing"
-
-	"github.com/constructor/raw"
 )
+
+const thisFileName = "code_test.go"
 
 func TestCodeImpl_Read(t *testing.T) {
 	type fields struct {
@@ -14,18 +14,21 @@ func TestCodeImpl_Read(t *testing.T) {
 	tests := []struct {
 		name   string
 		fields fields
-		want   raw.Code
 	}{
-		// TODO: Add test cases.
+		{
+			name: "Successfully read go file.",
+			fields: fields{
+				FilePath: thisFileName,
+			},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			impl := CodeImpl{
 				FilePath: tt.fields.FilePath,
 			}
-			if got := impl.Read(); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("CodeImpl.Read() = %v, want %v", got, tt.want)
-			}
+			got := impl.Read()
+			fmt.Printf("Successfully got: %v ", got)
 		})
 	}
 }
