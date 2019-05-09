@@ -1,3 +1,7 @@
 package raw
 
-type Template struct{}
+import "html/template"
+
+type Template struct {
+	Template template.Template
+}

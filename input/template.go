@@ -1,12 +1,21 @@
 package input
 
-import "github.com/constructor/raw"
+import (
+	"html/template"
+
+	"github.com/constructor/raw"
+)
 
 type Template interface {
 	Read() raw.Template
 }
-type TemplateImpl struct{}
+type TemplateImpl struct {
+	FilePath raw.Path
+}
 
-func (TemplateImpl) Read() raw.Template {
-	return raw.Template{}
+func (impl TemplateImpl) Read() raw.Template {
+	tpl := template.Must(template.New("input").Parse(impl.FilePath))
+	return raw.Template{
+		Template: *tpl,
+	}
 }
