@@ -1,7 +1,7 @@
 package input
 
 import (
-	"reflect"
+	"fmt"
 	"testing"
 
 	"github.com/constructor/raw"
@@ -14,18 +14,21 @@ func TestTemplateImpl_Read(t *testing.T) {
 	tests := []struct {
 		name   string
 		fields fields
-		want   raw.Template
 	}{
-		// TODO: Add test cases.
+		{
+			name: "Successfully read template file.",
+			fields: fields{
+				FilePath: "../template_test.go",
+			},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			impl := TemplateImpl{
 				FilePath: tt.fields.FilePath,
 			}
-			if got := impl.Read(); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("TemplateImpl.Read() = %v, want %v", got, tt.want)
-			}
+			got := impl.Read()
+			fmt.Printf("Successfully got: %v ", got)
 		})
 	}
 }
