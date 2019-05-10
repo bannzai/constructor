@@ -1,15 +1,15 @@
 package parser
 
-import "github.com/constructor/input"
+import (
+	"github.com/constructor/raw"
+)
 
 type YamlParsedResult string
 type Yaml interface {
-	Parse() YamlParsedResult
+	Parse(yaml raw.Yaml) YamlParsedResult
 }
-type YamlImpl struct {
-	Input input.Yaml
-}
+type YamlImpl struct{}
 
-func (impl YamlImpl) Parse() YamlParsedResult {
+func (impl YamlImpl) Parse(yaml raw.Yaml) YamlParsedResult {
 	return ""
 }

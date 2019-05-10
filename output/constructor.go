@@ -1,10 +1,10 @@
 package output
 
 type Constructor interface {
-	Output() error
+	Generate() error
 }
 type ConstructorImpl struct{}
 
-func (ConstructorImpl) Output() error {
+func (ConstructorImpl) Generate() error {
 	return nil
 }

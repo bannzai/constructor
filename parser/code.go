@@ -1,15 +1,15 @@
 package parser
 
-import "github.com/constructor/input"
+import (
+	"github.com/constructor/raw"
+)
 
 type CodeParsedResult string
 type Code interface {
-	Parse() CodeParsedResult
+	Parse(code raw.Code) CodeParsedResult
 }
-type CodeImpl struct {
-	Input input.Code
-}
+type CodeImpl struct{}
 
-func (impl CodeImpl) Parse() CodeParsedResult {
+func (impl CodeImpl) Parse(code raw.Code) CodeParsedResult {
 	return ""
 }

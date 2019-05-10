@@ -1,10 +1,10 @@
 package output
 
 type Template interface {
-	Output() error
+	Setup() error
 }
 type TemplateImpl struct{}
 
-func (impl TemplateImpl) output() error {
+func (impl TemplateImpl) Setup() error {
 	return nil
 }
