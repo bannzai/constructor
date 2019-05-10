@@ -6,5 +6,5 @@ type Yaml interface {
 type YamlImpl struct{}
 
 func (YamlImpl) Output() error {
-
+	return nil
 }

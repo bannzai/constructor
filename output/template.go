@@ -6,5 +6,5 @@ type Template interface {
 type TemplateImpl struct{}
 
 func (impl TemplateImpl) output() error {
-
+	return nil
 }

@@ -6,5 +6,5 @@ type Constructor interface {
 type ConstructorImpl struct{}
 
 func (ConstructorImpl) Output() error {
-
+	return nil
 }
