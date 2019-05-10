@@ -14,12 +14,12 @@ type Yaml interface {
 
 // YamlImpl for implement for Yaml
 type YamlImpl struct {
-	argument raw.Argument
+	Argument raw.Argument
 }
 
 // Read for yaml file
 func (impl YamlImpl) Read() raw.Yaml {
-	buf, err := ioutil.ReadFile(impl.argument.YamlPath)
+	buf, err := ioutil.ReadFile(impl.Argument.YamlPath)
 	if err != nil {
 		panic(err)
 	}
