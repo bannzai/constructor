@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/constructor/cmd"
+	"github.com/constructor/config"
 	"github.com/constructor/input"
 	"github.com/constructor/model"
 	"github.com/constructor/output"
@@ -13,6 +14,7 @@ import (
 const YamlFilePathName = "constructor.yaml"
 
 func main() {
+	config.Configuration.YamlFilePath = YamlFilePathName
 	yaml := input.YamlImpl{
 		Argument: raw.Argument{
 			YamlPath: configurationFilePath(),

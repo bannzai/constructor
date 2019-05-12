@@ -18,6 +18,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/constructor/config"
 	"github.com/spf13/cobra"
 )
 
@@ -32,6 +33,11 @@ And you can edit "./constructor.yaml", If you customize generate files. (e.g you
 You get "./constructor.yaml" to execute "constructor setup".
 `,
 	Args: cobra.MinimumNArgs(1),
+	PersistentPreRun: func(cmd *cobra.Command, args []string) {
+		if _, err := os.Stat(config.Configuration.YamlFilePath); err != nil {
+			panic(err)
+		}
+	},
 	Run: func(cmd *cobra.Command, args []string) {
 		cmd.Help()
 	},
