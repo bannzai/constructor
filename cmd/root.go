@@ -15,23 +15,22 @@
 package cmd
 
 import (
-	"fmt"
-
 	"github.com/spf13/cobra"
 )
 
 // rootCmd represents the root command
 var rootCmd = &cobra.Command{
-	Use:   "root",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Use:   "construtor [generate,setup]",
+	Short: "constructor can be generated constructor function for each struct",
+	Long: `
+This application is a tool to generate constructor functions for each struct quickly.
+When you execute "constructor generate [/path/to/package]", It is generating constructor functions under the package.
+And you can edit "./constructor.yaml", If you customize generate files. (e.g you wanna ignore files for "constructor generate")
+You get "./constructor.yaml" to execute "constructor setup".
+`,
+	Args: cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("root called")
+		cmd.Help()
 	},
 }
 
