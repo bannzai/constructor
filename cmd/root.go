@@ -15,12 +15,15 @@
 package cmd
 
 import (
+	"fmt"
+	"os"
+
 	"github.com/spf13/cobra"
 )
 
 // rootCmd represents the root command
 var rootCmd = &cobra.Command{
-	Use:   "construtor [generate,setup]",
+	Use:   "construtor",
 	Short: "constructor can be generated constructor function for each struct",
 	Long: `
 This application is a tool to generate constructor functions for each struct quickly.
@@ -34,8 +37,14 @@ You get "./constructor.yaml" to execute "constructor setup".
 	},
 }
 
+func Execute() {
+	if err := rootCmd.Execute(); err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+}
+
 func init() {
-	rootCmd.AddCommand(rootCmd)
 
 	// Here you will define your flags and configuration settings.
 

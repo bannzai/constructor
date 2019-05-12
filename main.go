@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 
+	"github.com/constructor/cmd"
 	"github.com/constructor/input"
 	"github.com/constructor/model"
 	"github.com/constructor/output"
@@ -49,6 +50,7 @@ func main() {
 	}
 
 	fmt.Printf("yaml = %+v\n", yaml)
+	cmd.Execute()
 }
 
 func definitions(yaml raw.Yaml) []raw.Definition {
