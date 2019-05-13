@@ -20,6 +20,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
+const YamlFilePathName = "constructor.yaml"
+
 // setupCmd represents the setup command
 var setupCmd = &cobra.Command{
 	Use:   "setup",
