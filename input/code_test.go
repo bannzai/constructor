@@ -3,7 +3,6 @@ package input
 import (
 	"fmt"
 	"go/ast"
-	"reflect"
 	"testing"
 
 	"github.com/constructor/raw"
@@ -55,7 +54,7 @@ func Test_parseASTFile(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := parseASTFile(tt.args.filePath); got != nil && tt.wantNil {
+			if got := parseASTFile(tt.args.filePath); (got == nil) != tt.wantNil {
 				t.Errorf("parseASTFile() = %v, want %v", got, tt.wantNil)
 			}
 		})
@@ -67,16 +66,23 @@ func Test_parseASTStructs(t *testing.T) {
 		file *ast.File
 	}
 	tests := []struct {
-		name        string
-		args        args
-		wantStructs []ast.StructType
+		name             string
+		args             args
+		wantStructsCount int
 	}{
-	// TODO: Add test cases.
+		// reference: https://play.golang.org/p/BMcvmVmSgtM
+		{
+			name: "Successfully parse AST file.",
+			args: args{
+				file: parseASTFile(testdataPath + "struct.go"),
+			},
+			wantStructsCount: 1,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if gotStructs := parseASTStructs(tt.args.file); !reflect.DeepEqual(gotStructs, tt.wantStructs) {
-				t.Errorf("parseASTStructs() = %v, want %v", gotStructs, tt.wantStructs)
+			if gotStructs := parseASTStructs(tt.args.file); len(gotStructs) != tt.wantStructsCount {
+				t.Errorf("parseASTStructs() = %v, wantStructsCount %v", gotStructs, tt.wantStructsCount)
 			}
 		})
 	}
