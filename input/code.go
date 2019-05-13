@@ -1,6 +1,7 @@
 package input
 
 import (
+	"go/ast"
 	"go/parser"
 	"go/token"
 	"io/ioutil"
@@ -13,7 +14,14 @@ type Code interface {
 }
 type CodeImpl struct{}
 
-func (impl CodeImpl) Read(filePath raw.Path) raw.Code {
+func (impl CodeImpl) Read(filePath raw.Path) (code raw.Code) {
+	code.FilePath = filePath
+	code.ASTFile = parseASTFile(code.FilePath)
+	code.Structs = parseASTStructs(code.ASTFile)
+	return
+}
+
+func parseASTFile(filePath raw.Path) *ast.File {
 	buf, err := ioutil.ReadFile(filePath)
 	if err != nil {
 		panic(err)
@@ -23,8 +31,19 @@ func (impl CodeImpl) Read(filePath raw.Path) raw.Code {
 	if err != nil {
 		panic(err)
 	}
-	return raw.Code{
-		FilePath: filePath,
-		ASTFile:  *astFile,
-	}
+	return astFile
+}
+
+func parseASTStructs(file *ast.File) (structs []ast.StructType) {
+	ast.Inspect(file, func(node ast.Node) bool {
+		lastChildNode := node == nil
+		if lastChildNode {
+			return false
+		}
+		if structType, ok := node.(*ast.StructType); ok {
+			structs = append(structs, *structType)
+		}
+		return true
+	})
+	return
 }
