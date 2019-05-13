@@ -10,6 +10,7 @@ import (
 )
 
 const thisFileName = "code_test.go"
+const testdataPath = "testdata/"
 
 func TestCodeImpl_Read(t *testing.T) {
 	type args struct {
@@ -40,16 +41,22 @@ func Test_parseASTFile(t *testing.T) {
 		filePath raw.Path
 	}
 	tests := []struct {
-		name string
-		args args
-		want *ast.File
+		name    string
+		args    args
+		wantNil bool
 	}{
-		// TODO: Add test cases.
+		{
+			name: "Successfully parse AST file.",
+			args: args{
+				filePath: testdataPath + "struct.go",
+			},
+			wantNil: false,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := parseASTFile(tt.args.filePath); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("parseASTFile() = %v, want %v", got, tt.want)
+			if got := parseASTFile(tt.args.filePath); got != nil && tt.wantNil {
+				t.Errorf("parseASTFile() = %v, want %v", got, tt.wantNil)
 			}
 		})
 	}
@@ -64,7 +71,7 @@ func Test_parseASTStructs(t *testing.T) {
 		args        args
 		wantStructs []ast.StructType
 	}{
-		// TODO: Add test cases.
+	// TODO: Add test cases.
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
