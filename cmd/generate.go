@@ -15,9 +15,10 @@
 package cmd
 
 import (
+	"context"
+
 	"github.com/constructor/config"
 	"github.com/constructor/input"
-	"github.com/constructor/model"
 	"github.com/constructor/output"
 	"github.com/constructor/raw"
 	"github.com/spf13/cobra"
@@ -36,62 +37,25 @@ constructor generate [/path/to/package] [-c(--config) constructor.yaml].
 }
 
 func generate() {
-	config.Configuration.YamlFilePath = YamlFilePathName
-	yaml := input.YamlImpl{
-		Argument: raw.Argument{
-			YamlPath: configurationFilePath(),
+	ctx := context.Background()
+	output.ConstructorImpl{
+		YamlReader: input.YamlImpl{
+			Argument: raw.Argument{
+				YamlPath: configurationFilePath(),
+			},
 		},
-	}.Read()
-
-	generateSources := []model.GenerateElementEachPackage{}
-	for _, definition := range definitions(yaml) {
-		templates := []raw.Template{}
-		for _, path := range templateFilePaths(definition) {
-			templates = append(templates, input.TemplateImpl{
-				FilePath: path,
-			}.Read())
-		}
-
-		codes := []raw.Code{}
-		for _, path := range sourceCodeFilePaths(definition) {
-			codes = append(codes, input.CodeImpl{
-				FilePath: path,
-			}.Read())
-		}
-
-		for _, template := range templates {
-			generateSources = append(generateSources, model.GenerateElementEachPackage{
-				Package:         definition.Package,
-				Template:        template,
-				Codes:           codes,
-				DestinationPath: definition.DestinationPath,
-			})
-		}
-	}
-
-	for _, source := range generateSources {
-		output.ConstructorImpl{source}.Generate()
-	}
-}
-
-func definitions(yaml raw.Yaml) []raw.Definition {
-	return []raw.Definition{}
+		TemplateReader:   input.TemplateImpl{},
+		SourceCodeReader: input.CodeImpl{},
+	}.Generate(ctx)
 }
 
 func configurationFilePath() raw.Path {
 	return "./" + YamlFilePathName
 }
 
-func templateFilePaths(defition raw.Definition) []raw.Path {
-	return []raw.Path{}
-}
-
-func sourceCodeFilePaths(defition raw.Definition) []raw.Path {
-	return []raw.Path{}
-}
-
 func init() {
 	rootCmd.AddCommand(generateCmd)
+	config.Configuration.YamlFilePath = YamlFilePathName
 
 	// Here you will define your flags and configuration settings.
 
