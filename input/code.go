@@ -9,24 +9,22 @@ import (
 )
 
 type Code interface {
-	Read() raw.Code
+	Read(filePath raw.Path) raw.Code
 }
-type CodeImpl struct {
-	FilePath string
-}
+type CodeImpl struct{}
 
-func (impl CodeImpl) Read() raw.Code {
-	buf, err := ioutil.ReadFile(impl.FilePath)
+func (impl CodeImpl) Read(filePath raw.Path) raw.Code {
+	buf, err := ioutil.ReadFile(filePath)
 	if err != nil {
 		panic(err)
 	}
 	fileSet := token.NewFileSet()
-	astFile, err := parser.ParseFile(fileSet, impl.FilePath, buf, 0)
+	astFile, err := parser.ParseFile(fileSet, filePath, buf, 0)
 	if err != nil {
 		panic(err)
 	}
 	return raw.Code{
-		FilePath: impl.FilePath,
+		FilePath: filePath,
 		ASTFile:  *astFile,
 	}
 }
