@@ -38,10 +38,11 @@ constructor generate [/path/to/package] [-c(--config) constructor.yaml].
 
 func generate() {
 	ctx := context.Background()
+	config.Configuration.YamlFilePath = YamlFilePathName
 	output.ConstructorImpl{
 		YamlReader: input.YamlImpl{
 			Argument: raw.Argument{
-				YamlPath: configurationFilePath(),
+				YamlPath: YamlFilePathName,
 			},
 		},
 		TemplateReader:   input.TemplateImpl{},
@@ -49,13 +50,8 @@ func generate() {
 	}.Generate(ctx)
 }
 
-func configurationFilePath() raw.Path {
-	return "./" + YamlFilePathName
-}
-
 func init() {
 	rootCmd.AddCommand(generateCmd)
-	config.Configuration.YamlFilePath = YamlFilePathName
 
 	// Here you will define your flags and configuration settings.
 
