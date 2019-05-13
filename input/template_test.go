@@ -8,26 +8,24 @@ import (
 )
 
 func TestTemplateImpl_Read(t *testing.T) {
-	type fields struct {
+	type args struct {
 		FilePath raw.Path
 	}
 	tests := []struct {
-		name   string
-		fields fields
+		name string
+		args args
 	}{
 		{
 			name: "Successfully read template file.",
-			fields: fields{
+			args: args{
 				FilePath: "../template_test.go",
 			},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			impl := TemplateImpl{
-				FilePath: tt.fields.FilePath,
-			}
-			got := impl.Read()
+			impl := TemplateImpl{}
+			got := impl.Read(tt.args.FilePath)
 			fmt.Printf("Successfully got: %v ", got)
 		})
 	}
