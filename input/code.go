@@ -97,9 +97,8 @@ func convert(typeName string, astStruct *ast.StructType) raw.Struct {
 		}
 	}
 
-	result := raw.Struct{
+	return raw.Struct{
 		Name:   typeName,
 		Fields: fields,
 	}
-	return result
 }
