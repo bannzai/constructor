@@ -73,17 +73,13 @@ func convert(typeName string, astStruct *ast.StructType) raw.Struct {
 			return true
 		}
 
-		identifier, ok := field.Type.(*ast.Ident)
-		if !ok {
-			return true
-		}
-		fieldTypeName := identifier.Name
-		if typeAndNames[fieldTypeName] == nil {
-			typeAndNames[fieldTypeName] = []string{}
-		}
-		for _, nameIdentifier := range field.Names {
-			name := nameIdentifier.Name
-			typeAndNames[fieldTypeName] = append(typeAndNames[fieldTypeName], name)
+		switch types := field.Type.(type) {
+		case *ast.Ident:
+			fieldTypeName := types.Name
+			for _, nameIdentifier := range field.Names {
+				name := nameIdentifier.Name
+				typeAndNames[fieldTypeName] = append(typeAndNames[fieldTypeName], name)
+			}
 		}
 		return true
 	})
