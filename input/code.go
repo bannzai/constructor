@@ -16,8 +16,9 @@ type CodeImpl struct{}
 
 func (impl CodeImpl) Read(filePath raw.Path) (code raw.Code) {
 	code.FilePath = filePath
-	code.ASTFile = parseASTFile(code.FilePath)
-	code.Structs = parseASTStructs(code.ASTFile)
+	for typeName, structure := range parseASTStructs(parseASTFile(code.FilePath)) {
+		code.Structs = append(code.Structs, convert(typeName, structure))
+	}
 	return
 }
 
@@ -34,16 +35,71 @@ func parseASTFile(filePath raw.Path) *ast.File {
 	return astFile
 }
 
-func parseASTStructs(file *ast.File) (structs []ast.StructType) {
+func parseASTStructs(file *ast.File) (typeNameAndStruct map[string]*ast.StructType) {
 	ast.Inspect(file, func(node ast.Node) bool {
 		lastChildNode := node == nil
 		if lastChildNode {
 			return false
 		}
-		if structType, ok := node.(*ast.StructType); ok {
-			structs = append(structs, *structType)
+
+		typeSpec, ok := node.(*ast.TypeSpec)
+		if !ok {
+			return true
 		}
+
+		name := typeSpec.Name.Name
+		structType, ok := typeSpec.Type.(*ast.StructType)
+		if !ok {
+			return true
+		}
+
+		typeNameAndStruct[name] = structType
 		return true
 	})
 	return
+}
+
+func convert(typeName string, astStruct *ast.StructType) raw.Struct {
+	typeAndNames := map[string][]string{}
+	ast.Inspect(astStruct, func(node ast.Node) bool {
+		lastChildNode := node == nil
+		if lastChildNode {
+			return false
+		}
+
+		field, ok := node.(*ast.Field)
+		if !ok {
+			return true
+		}
+
+		identifier, ok := field.Type.(*ast.Ident)
+		if !ok {
+			return true
+		}
+		fieldTypeName := identifier.Name
+		if typeAndNames[fieldTypeName] == nil {
+			typeAndNames[fieldTypeName] = []string{}
+		}
+		for _, nameIdentifier := range field.Names {
+			name := nameIdentifier.Name
+			typeAndNames[fieldTypeName] = append(typeAndNames[fieldTypeName], name)
+		}
+		return true
+	})
+
+	fields := []raw.Field{}
+	for fieldType, names := range typeAndNames {
+		for _, name := range names {
+			fields = append(fields, raw.Field{
+				Name: name,
+				Type: fieldType,
+			})
+		}
+	}
+
+	result := raw.Struct{
+		Name:   typeName,
+		Fields: fields,
+	}
+	return result
 }
