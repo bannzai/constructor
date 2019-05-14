@@ -1,15 +1,15 @@
 package input
 
 import (
-	"fmt"
 	"go/ast"
+	"reflect"
 	"testing"
 
 	"github.com/constructor/raw"
 )
 
-const thisFileName = "code_test.go"
 const testdataPath = "testdata/"
+const testdataStructPath = testdataPath + "struct.go"
 
 func TestCodeImpl_Read(t *testing.T) {
 	type args struct {
@@ -18,11 +18,30 @@ func TestCodeImpl_Read(t *testing.T) {
 	tests := []struct {
 		name string
 		args args
+		want raw.Code
 	}{
 		{
 			name: "Successfully read go file.",
 			args: args{
-				FilePath: thisFileName,
+				FilePath: testdataStructPath,
+			},
+			want: raw.Code{
+				FilePath: testdataStructPath,
+				Structs: []raw.Struct{
+					raw.Struct{
+						Name: "Struct",
+						Fields: []raw.Field{
+							raw.Field{
+								Name: "P",
+								Type: "string",
+							},
+							raw.Field{
+								Name: "F",
+								Type: "func(aaa int, bbb bool) string",
+							},
+						},
+					},
+				},
 			},
 		},
 	}
@@ -30,7 +49,9 @@ func TestCodeImpl_Read(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			impl := CodeImpl{}
 			got := impl.Read(tt.args.FilePath)
-			fmt.Printf("Successfully got: %v ", got)
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("Read() = %v, want %v", got, tt.want)
+			}
 		})
 	}
 }
@@ -47,7 +68,7 @@ func Test_parseASTFile(t *testing.T) {
 		{
 			name: "Successfully parse AST file.",
 			args: args{
-				filePath: testdataPath + "struct.go",
+				filePath: testdataStructPath,
 			},
 			wantNil: false,
 		},
@@ -74,7 +95,7 @@ func Test_parseASTStructs(t *testing.T) {
 		{
 			name: "Successfully parse AST file.",
 			args: args{
-				file: parseASTFile(testdataPath + "struct.go"),
+				file: parseASTFile(testdataStructPath),
 			},
 			wantStructsCount: 1,
 		},
