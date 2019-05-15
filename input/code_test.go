@@ -39,6 +39,10 @@ func TestCodeImpl_Read(t *testing.T) {
 								Name: "F",
 								Type: "func(aaa int, bbb bool) string",
 							},
+							raw.Field{
+								Name: "A",
+								Type: "Alias",
+							},
 						},
 					},
 				},
