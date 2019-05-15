@@ -80,6 +80,58 @@ func convert(typeName string, astStruct *ast.StructType) raw.Struct {
 				name := nameIdentifier.Name
 				typeAndNames[fieldTypeName] = append(typeAndNames[fieldTypeName], name)
 			}
+		case *ast.FuncType:
+			fieldName := field.Names[0].Name
+			statement := "func ("
+			for i, param := range types.Params.List {
+				parameterType := param.Type.(*ast.Ident).Name
+				parameterNames := param.Names[0 : len(param.Names)-1]
+				for i, parameterName := range parameterNames {
+					if i == 0 {
+						statement += parameterName.Name
+					} else {
+						statement += parameterName.Name + ","
+					}
+				}
+				if i == 0 {
+					statement += parameterType
+				} else {
+					statement += parameterType + ","
+				}
+			}
+			statement += ")"
+
+			results := types.Results.List
+			if len(results) > 1 {
+				statement += "("
+			}
+			for i, result := range types.Results.List {
+				resultType := result.Type.(*ast.Ident).Name
+				resultNames := result.Names[0 : len(result.Names)-1]
+				for i, resultName := range resultNames {
+					if i == 0 {
+						statement += resultName.Name
+					} else {
+						statement += resultName.Name + ","
+					}
+				}
+				if name, ok := result.Type.(*ast.Ident); ok {
+					statement += name.Name
+				}
+				if i == 0 {
+					statement += resultType
+				} else {
+					statement += resultType + ","
+				}
+			}
+			if len(results) > 1 {
+				statement += ")"
+			}
+			typeAndNames[fieldName] = append(typeAndNames[fieldName], statement)
+			// No continue child list
+			// because ast.FuncType has *ast.Field node.
+			// It will deprecate call function
+			return false
 		}
 		return true
 	})
