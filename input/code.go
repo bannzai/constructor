@@ -85,7 +85,7 @@ func convert(typeName string, astStruct *ast.StructType) raw.Struct {
 			statement := "func ("
 			for i, param := range types.Params.List {
 				parameterType := param.Type.(*ast.Ident).Name
-				parameterNames := param.Names[0 : len(param.Names)-1]
+				parameterNames := param.Names[0:len(param.Names)]
 				for i, parameterName := range parameterNames {
 					if i == 0 {
 						statement += parameterName.Name
@@ -107,7 +107,7 @@ func convert(typeName string, astStruct *ast.StructType) raw.Struct {
 			}
 			for i, result := range types.Results.List {
 				resultType := result.Type.(*ast.Ident).Name
-				resultNames := result.Names[0 : len(result.Names)-1]
+				resultNames := result.Names[0:len(result.Names)]
 				for i, resultName := range resultNames {
 					if i == 0 {
 						statement += resultName.Name
