@@ -81,23 +81,21 @@ func convert(typeName string, astStruct *ast.StructType) raw.Struct {
 				typeAndNames[fieldTypeName] = append(typeAndNames[fieldTypeName], name)
 			}
 		case *ast.FuncType:
-			fieldName := field.Names[0].Name
-			statement := "func ("
+			statement := "func("
 			for i, param := range types.Params.List {
 				parameterType := param.Type.(*ast.Ident).Name
 				parameterNames := param.Names[0:len(param.Names)]
+				if i != 0 {
+					statement += ", "
+				}
 				for i, parameterName := range parameterNames {
 					if i == 0 {
 						statement += parameterName.Name
 					} else {
-						statement += parameterName.Name + ","
+						statement += ", " + parameterName.Name
 					}
 				}
-				if i == 0 {
-					statement += parameterType
-				} else {
-					statement += parameterType + ","
-				}
+				statement += " " + parameterType
 			}
 			statement += ")"
 
@@ -108,26 +106,23 @@ func convert(typeName string, astStruct *ast.StructType) raw.Struct {
 			for i, result := range types.Results.List {
 				resultType := result.Type.(*ast.Ident).Name
 				resultNames := result.Names[0:len(result.Names)]
+				if i != 0 {
+					statement += ", "
+				}
 				for i, resultName := range resultNames {
 					if i == 0 {
 						statement += resultName.Name
 					} else {
-						statement += resultName.Name + ","
+						statement += ", " + resultName.Name
 					}
 				}
-				if name, ok := result.Type.(*ast.Ident); ok {
-					statement += name.Name
-				}
-				if i == 0 {
-					statement += resultType
-				} else {
-					statement += resultType + ","
-				}
+				statement += " " + resultType
 			}
 			if len(results) > 1 {
 				statement += ")"
 			}
-			typeAndNames[fieldName] = append(typeAndNames[fieldName], statement)
+			fieldName := field.Names[0].Name
+			typeAndNames[statement] = append(typeAndNames[statement], fieldName)
 			// No continue child list
 			// because ast.FuncType has *ast.Field node.
 			// It will deprecate call function
