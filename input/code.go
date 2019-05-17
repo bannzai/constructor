@@ -123,9 +123,9 @@ func convert(typeName string, astStruct *ast.StructType) raw.Struct {
 			}
 			fieldName := field.Names[0].Name
 			typeAndNames[statement] = append(typeAndNames[statement], fieldName)
-			// No continue child list
-			// because ast.FuncType has *ast.Field node.
-			// It will deprecate call function
+			// No continue next child
+			// Because ast.FuncType has *ast.Field node.
+			// It will duplicate call function
 			return false
 		}
 		return true
