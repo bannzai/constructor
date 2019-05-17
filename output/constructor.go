@@ -51,13 +51,13 @@ func (impl ConstructorImpl) Generate(ctx context.Context) {
 	}
 }
 func definitions(yaml raw.Yaml) []raw.Definition {
-	return []raw.Definition{}
+	return yaml.Definitions
 }
 
-func templateFilePaths(defition raw.Definition) []raw.Path {
-	return []raw.Path{}
+func templateFilePaths(definition raw.Definition) []raw.Path {
+	return definition.TemplateFilePaths
 }
 
-func sourceCodeFilePaths(defition raw.Definition) []raw.Path {
-	return []raw.Path{}
+func sourceCodeFilePaths(definition raw.Definition) []raw.Path {
+	return definition.SourcePaths
 }
