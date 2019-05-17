@@ -1,0 +1,9 @@
+
+definitions: 
+  - package: input
+  - sourcePaths:
+    - input/*.go
+  - ignorePaths:
+  - templateFilePaths: 
+  - destinationPath:
+    - ./input/
