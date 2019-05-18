@@ -18,7 +18,7 @@ func TestTemplateImpl_Read(t *testing.T) {
 		{
 			name: "Successfully read template file.",
 			args: args{
-				FilePath: "../template_test.go",
+				FilePath: "../constructor.tpl",
 			},
 		},
 	}
