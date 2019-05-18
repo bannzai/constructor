@@ -18,7 +18,6 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/constructor/config"
 	"github.com/spf13/cobra"
 )
 
@@ -34,8 +33,9 @@ You get "./constructor.yaml" to execute "constructor setup".
 `,
 	Args: cobra.MinimumNArgs(1),
 	PersistentPreRun: func(cmd *cobra.Command, args []string) {
-		if _, err := os.Stat(config.Configuration.YamlFilePath); err != nil {
-			panic(err)
+		if _, err := os.Stat(YamlFilePathName); err != nil {
+			fmt.Println("Can not find configuration file. Should prepare " + YamlFilePathName)
+			os.Exit(1)
 		}
 	},
 	Run: func(cmd *cobra.Command, args []string) {
@@ -44,8 +44,7 @@ You get "./constructor.yaml" to execute "constructor setup".
 }
 
 func Execute() {
-	if err := rootCmd.Execute(); err != nil {
-		fmt.Println(err)
+	if cmd, err := rootCmd.ExecuteC(); err != nil {
 		os.Exit(1)
 	}
 }
