@@ -1,6 +1,7 @@
 package output
 
 import (
+	"fmt"
 	"os"
 )
 
@@ -32,6 +33,10 @@ func New{{$structureName}}{{$suffix}}(
 `
 
 func (impl Template) Setup() {
+	if fileExists(templateFileName) {
+		fmt.Println(templateFileName + " is already exists. Not generate " + templateFileName)
+		return
+	}
 	file, err := os.Create(templateFileName)
 	if err != nil {
 		panic(err)

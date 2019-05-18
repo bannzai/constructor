@@ -1,6 +1,7 @@
 package output
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/constructor/raw"
@@ -12,6 +13,10 @@ type Yaml struct{}
 const yamlFilePathName = "constructor.yaml"
 
 func (Yaml) Setup() {
+	if fileExists(yamlFilePathName) {
+		fmt.Println(yamlFilePathName + " is already exists. Not generate " + yamlFilePathName)
+		return
+	}
 	y := raw.Yaml{
 		Definitions: []raw.Definition{
 			raw.Definition{
