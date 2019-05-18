@@ -15,8 +15,8 @@ type Code interface {
 type CodeImpl struct{}
 
 func (impl CodeImpl) Read(filePath raw.Path) (code raw.Code) {
-	code.FilePath = filePath
-	for typeName, structure := range parseASTStructs(parseASTFile(code.FilePath)) {
+	code.SourcePath = filePath
+	for typeName, structure := range parseASTStructs(parseASTFile(code.SourcePath)) {
 		code.Structs = append(code.Structs, convert(typeName, structure))
 	}
 	return

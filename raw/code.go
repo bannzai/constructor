@@ -3,8 +3,8 @@ package raw
 type (
 	// Code is presentation of .go file content.
 	Code struct {
-		FilePath Path
-		Structs  []Struct
+		SourcePath Path
+		Structs    []Struct
 	}
 	Struct struct {
 		Name   string

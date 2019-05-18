@@ -24,7 +24,7 @@ func (t generateComponent) Content() []byte {
 	buf := &bytes.Buffer{}
 	if err := t.Template.Funcs(functions).Execute(buf, map[string]interface{}{
 		"Package":        t.Package,
-		"SourceFilePath": t.SourceCode.FilePath,
+		"SourceFilePath": t.SourceCode.SourcePath,
 		"Structs":        t.SourceCode.Structs,
 	}); err != nil {
 		panic(err)
