@@ -4,9 +4,8 @@ import (
 	"context"
 	"html/template"
 
-	"github.com/constructor/reader"
-	"github.com/constructor/model"
 	"github.com/constructor/raw"
+	"github.com/constructor/reader"
 )
 
 type Constructor interface {
