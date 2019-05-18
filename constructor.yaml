@@ -1,6 +1,6 @@
 definitions:
 - package: ""
-  sourcePaths: []
+  patckagePath: ""
   ignoredPaths: []
   templatePaths: []
   destinationPath: ""
