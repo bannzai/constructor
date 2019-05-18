@@ -7,13 +7,10 @@ import (
 )
 
 type Template interface {
-	Read(filePath raw.Path) raw.Template
+	Read(filePath raw.Path) *template.Template
 }
 type TemplateImpl struct{}
 
-func (impl TemplateImpl) Read(filePath raw.Path) raw.Template {
-	tpl := template.Must(template.New("input").Parse(filePath))
-	return raw.Template{
-		Template: *tpl,
-	}
+func (impl TemplateImpl) Read(filePath raw.Path) *template.Template {
+	return template.Must(template.New("input").Parse(filePath))
 }

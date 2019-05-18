@@ -2,6 +2,7 @@ package output
 
 import (
 	"context"
+	"html/template"
 
 	"github.com/constructor/input"
 	"github.com/constructor/model"
@@ -22,7 +23,7 @@ func (impl ConstructorImpl) Generate(ctx context.Context) {
 
 	generateSources := []model.GenerateElementEachPackage{}
 	for _, definition := range definitions(yaml) {
-		templates := []raw.Template{}
+		templates := []*template.Template{}
 		for _, path := range templateFilePaths(definition) {
 			templates = append(templates, impl.TemplateReader.Read(path))
 		}

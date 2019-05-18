@@ -11,7 +11,7 @@ import (
 // GenerateElementEachPackage is inter struct for generate constructor.
 type GenerateElementEachPackage struct {
 	Package         string
-	Template        raw.Template
+	Template        *template.Template
 	SourceCode      raw.Code
 	DestinationPath raw.Path
 
@@ -37,7 +37,7 @@ func upperCamelCase(target string) string {
 }
 
 func (t GenerateElementEachPackage) Content() []byte {
-	if err := t.Template.Template.Funcs(functions).Execute(t.Writer, map[string]interface{}{
+	if err := t.Template.Funcs(functions).Execute(t.Writer, map[string]interface{}{
 		"SourceFilePath": t.SourceCode.FilePath,
 		"Structs":        t.SourceCode.Structs,
 	}); err != nil {
