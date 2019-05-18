@@ -1,6 +1,6 @@
 definitions:
 - package: "reader"
-  patckagePath: "reader/*.go"
+  sourcePath: "reader/*.go"
   ignoredPaths: []
   templatePaths: ["constructor.tpl"]
   destinationPath: "reader"
