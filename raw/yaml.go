@@ -8,7 +8,7 @@ type (
 	// Definition is each elemnt for yaml
 	Definition struct {
 		Package           string `yaml:"package"`
-		SourcePaths       []Path `yaml:"sourcePaths"`
+		PackagePath       Path   `yaml:"patckagePath"`
 		IgnoredPaths      []Path `yaml:"ignoredPaths"`
 		TemplateFilePaths []Path `yaml:"templatePaths"`
 		DestinationPath   Path   `yaml:"destinationPath"`

@@ -6,7 +6,7 @@ import "github.com/constructor/raw"
 type GenerateElementEachPackage struct {
 	Package         string
 	Template        raw.Template
-	Codes           []raw.Code
+	SourceCode      raw.Code
 	DestinationPath raw.Path
 }
 

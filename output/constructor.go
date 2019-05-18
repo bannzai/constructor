@@ -27,16 +27,13 @@ func (impl ConstructorImpl) Generate(ctx context.Context) {
 			templates = append(templates, impl.TemplateReader.Read(path))
 		}
 
-		codes := []raw.Code{}
-		for _, path := range sourceCodeFilePaths(definition) {
-			codes = append(codes, input.CodeImpl{}.Read(path))
-		}
+		code := input.CodeImpl{}.Read(packagePath(definition))
 
 		for _, template := range templates {
 			generateSources = append(generateSources, model.GenerateElementEachPackage{
 				Package:         definition.Package,
 				Template:        template,
-				Codes:           codes,
+				SourceCode:      code,
 				DestinationPath: definition.DestinationPath,
 			})
 		}
@@ -55,6 +52,6 @@ func templateFilePaths(definition raw.Definition) []raw.Path {
 	return definition.TemplateFilePaths
 }
 
-func sourceCodeFilePaths(definition raw.Definition) []raw.Path {
-	return definition.SourcePaths
+func packagePath(definition raw.Definition) raw.Path {
+	return definition.PackagePath
 }
