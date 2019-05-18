@@ -2,7 +2,6 @@ package output
 
 import (
 	"fmt"
-	"os"
 
 	"github.com/constructor/raw"
 	yaml "gopkg.in/yaml.v2"
@@ -34,10 +33,5 @@ func (Yaml) Setup() {
 		panic(err)
 	}
 
-	file, err := os.Create(yamlFilePathName)
-	if err != nil {
-		panic(err)
-	}
-	defer file.Close()
-	file.Write(output)
+	writeFile(yamlFilePathName, output)
 }

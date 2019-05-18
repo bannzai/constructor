@@ -2,7 +2,6 @@ package output
 
 import (
 	"fmt"
-	"os"
 )
 
 type Template struct{}
@@ -37,10 +36,5 @@ func (impl Template) Setup() {
 		fmt.Println(templateFileName + " is already exists. Not generate " + templateFileName)
 		return
 	}
-	file, err := os.Create(templateFileName)
-	if err != nil {
-		panic(err)
-	}
-	defer file.Close()
-	file.Write([]byte(defaultTemplate))
+	writeFile(templateFileName, []byte(defaultTemplate))
 }

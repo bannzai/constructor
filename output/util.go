@@ -1,6 +1,9 @@
 package output
 
-import "os"
+import (
+	"io/ioutil"
+	"os"
+)
 
 func fileExists(fileName string) bool {
 	file, err := os.Stat(fileName)
@@ -8,4 +11,10 @@ func fileExists(fileName string) bool {
 		return false
 	}
 	return !file.IsDir()
+}
+
+func writeFile(destinationPath string, content []byte) {
+	if err := ioutil.WriteFile(destinationPath, content, 0644); err != nil {
+		panic(err)
+	}
 }

@@ -2,7 +2,6 @@ package output
 
 import (
 	"context"
-	"io/ioutil"
 
 	"github.com/constructor/input"
 	"github.com/constructor/model"
@@ -45,9 +44,7 @@ func (impl ConstructorImpl) Generate(ctx context.Context) {
 
 	for _, source := range generateSources {
 		content := source.Content()
-		if err := ioutil.WriteFile(source.DestinationPath, content, 0644); err != nil {
-			panic(err)
-		}
+		writeFile(source.DestinationPath, content)
 	}
 }
 func definitions(yaml raw.Yaml) []raw.Definition {
