@@ -1,4 +1,4 @@
-package model
+package output
 
 import (
 	"html/template"
@@ -8,8 +8,8 @@ import (
 	"github.com/constructor/raw"
 )
 
-// GenerateElementEachPackage is inter struct for generate constructor.
-type GenerateElementEachPackage struct {
+// Generator is inter struct for generate constructor.
+type Generator struct {
 	Package         string
 	Template        *template.Template
 	SourceCode      raw.Code
@@ -36,13 +36,11 @@ func upperCamelCase(target string) string {
 	return firstString + dropedFirstString
 }
 
-func (t GenerateElementEachPackage) Content() []byte {
+func (t Generator) Generate() {
 	if err := t.Template.Funcs(functions).Execute(t.Writer, map[string]interface{}{
 		"SourceFilePath": t.SourceCode.FilePath,
 		"Structs":        t.SourceCode.Structs,
 	}); err != nil {
 		panic(err)
 	}
-
-	return []byte{}
 }
