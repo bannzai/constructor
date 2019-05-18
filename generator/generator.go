@@ -22,16 +22,18 @@ var functions = template.FuncMap{
 
 func (g generateComponent) Content() []byte {
 	buf := &bytes.Buffer{}
-	t := g.Template.Funcs(functions)
+	g.Template = g.Template.Funcs(functions)
 
+	structs := []raw.Struct{}
 	for _, sourceCode := range g.SourceCodes {
-		if err := t.Execute(buf, map[string]interface{}{
-			"Package":        g.Package,
-			"SourceFilePath": sourceCode.FilePath,
-			"Structs":        sourceCode.Structs,
-		}); err != nil {
-			panic(err)
-		}
+		structs = append(structs, sourceCode.Structs...)
+	}
+
+	if err := g.Template.ExecuteTemplate(buf, "constructor", map[string]interface{}{
+		"Package": g.Package,
+		"Structs": structs,
+	}); err != nil {
+		panic(err)
 	}
 	return buf.Bytes()
 }

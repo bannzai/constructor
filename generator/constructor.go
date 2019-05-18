@@ -20,8 +20,8 @@ type ConstructorImpl struct {
 
 func (impl ConstructorImpl) Generate(ctx context.Context) {
 	yaml := impl.YamlReader.Read()
-
 	generateSources := []generateComponent{}
+
 	for _, definition := range definitions(yaml) {
 		templates := []*template.Template{}
 		for _, path := range templateFilePaths(definition) {
