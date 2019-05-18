@@ -17,9 +17,9 @@ package cmd
 import (
 	"context"
 
-	"github.com/constructor/reader"
 	"github.com/constructor/generator"
 	"github.com/constructor/raw"
+	"github.com/constructor/reader"
 	"github.com/spf13/cobra"
 )
 
@@ -31,7 +31,7 @@ var generateCmd = &cobra.Command{
 constructor generate [/path/to/package] [-c(--config) constructor.yaml].
 `,
 	Run: func(cmd *cobra.Command, args []string) {
-		generate("")
+		generate("./constructor.yaml")
 	},
 }
 
