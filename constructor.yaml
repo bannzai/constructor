@@ -1,9 +1,6 @@
-
-definitions: 
-  - package: input
-  - sourcePaths:
-    - input/*.go
-  - ignorePaths:
-  - templateFilePaths: 
-  - destinationPath:
-    - ./input/
+definitions:
+- package: ""
+  sourcePaths: []
+  ignoredPaths: []
+  templatePaths: []
+  destinationPath: ""
