@@ -12,5 +12,5 @@ type Template interface {
 type TemplateImpl struct{}
 
 func (impl TemplateImpl) Read(filePath raw.Path) *template.Template {
-	return template.Must(template.New("constructor").Parse(filePath))
+	return template.Must(template.New("constructor").ParseFiles(filePath))
 }
