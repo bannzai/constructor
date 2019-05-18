@@ -44,7 +44,7 @@ You get "./constructor.yaml" to execute "constructor setup".
 }
 
 func Execute() {
-	if cmd, err := rootCmd.ExecuteC(); err != nil {
+	if err := rootCmd.Execute(); err != nil {
 		os.Exit(1)
 	}
 }
