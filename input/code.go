@@ -1,4 +1,4 @@
-package input
+package reader
 
 import (
 	"go/ast"

@@ -17,7 +17,7 @@ package cmd
 import (
 	"context"
 
-	"github.com/constructor/input"
+	"github.com/constructor/reader"
 	"github.com/constructor/generator"
 	"github.com/constructor/raw"
 	"github.com/spf13/cobra"
@@ -38,13 +38,13 @@ constructor generate [/path/to/package] [-c(--config) constructor.yaml].
 func generate(yamlFilePath string) {
 	ctx := context.Background()
 	generator.ConstructorImpl{
-		YamlReader: input.YamlImpl{
+		YamlReader: reader.YamlImpl{
 			Argument: raw.Argument{
 				YamlPath: yamlFilePath,
 			},
 		},
-		TemplateReader:   input.TemplateImpl{},
-		SourceCodeReader: input.CodeImpl{},
+		TemplateReader:   reader.TemplateImpl{},
+		SourceCodeReader: reader.CodeImpl{},
 	}.Generate(ctx)
 }
 

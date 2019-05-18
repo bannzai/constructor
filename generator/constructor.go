@@ -4,7 +4,7 @@ import (
 	"context"
 	"html/template"
 
-	"github.com/constructor/input"
+	"github.com/constructor/reader"
 	"github.com/constructor/model"
 	"github.com/constructor/raw"
 )
@@ -13,9 +13,9 @@ type Constructor interface {
 	Generate(ctx context.Context)
 }
 type ConstructorImpl struct {
-	YamlReader       input.Yaml
-	TemplateReader   input.Template
-	SourceCodeReader input.Code
+	YamlReader       reader.Yaml
+	TemplateReader   reader.Template
+	SourceCodeReader reader.Code
 }
 
 func (impl ConstructorImpl) Generate(ctx context.Context) {
@@ -28,7 +28,7 @@ func (impl ConstructorImpl) Generate(ctx context.Context) {
 			templates = append(templates, impl.TemplateReader.Read(path))
 		}
 
-		code := input.CodeImpl{}.Read(packagePath(definition))
+		code := reader.CodeImpl{}.Read(packagePath(definition))
 
 		for _, template := range templates {
 			generateSources = append(generateSources, model.GenerateElementEachPackage{

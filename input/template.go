@@ -1,4 +1,4 @@
-package input
+package reader
 
 import (
 	"html/template"
@@ -12,5 +12,5 @@ type Template interface {
 type TemplateImpl struct{}
 
 func (impl TemplateImpl) Read(filePath raw.Path) *template.Template {
-	return template.Must(template.New("input").Parse(filePath))
+	return template.Must(template.New("reader").Parse(filePath))
 }
