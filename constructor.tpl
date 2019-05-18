@@ -6,7 +6,7 @@
 package {{.Package}}
 
 {{range $i, $field := .Structs -}}
-{{- $suffix := $dot.Package | upperCamelCase -}}
+{{- $suffix := upperCamelCase $dot.Package -}}
 {{- $structureName := $dot.Name -}}
 // New{{$structureName}}{{$suffix}} insitanciate {{$dot.Name}}
 func New{{$structureName}}{{$suffix}}(
