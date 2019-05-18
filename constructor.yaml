@@ -1,6 +1,6 @@
 definitions:
-- package: ""
-  patckagePath: ""
+- package: "input"
+  patckagePath: "./input"
   ignoredPaths: []
-  templatePaths: []
-  destinationPath: ""
+  templatePaths: ["./constructor.tpl"]
+  destinationPath: "./input"
