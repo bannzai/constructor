@@ -11,12 +11,12 @@ package {{.Package}}
 // New{{$structureName}}{{$suffix}} insitanciate {{$dot.Name}}
 func New{{$structureName}}{{$suffix}}(
 	{{range $i, $field := $dot.Fields -}}
-		{{parameterCase $field}} {{$field}},
+		{{parameterCase $field.Name}} {{$field.Name}},
 	{{end}}
 ) {{$structureName}} {
 	return {{$structureName}}{{$suffix}}{
 		{{range $i, $field := $dot.Fields -}}
-			{{$field}}: {{argumentCase $field}},
+			{{$field.Name}}: {{argumentCase $field.Name}},
 		{{end}}
 	}
 }

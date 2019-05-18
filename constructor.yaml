@@ -1,6 +1,6 @@
 definitions:
-- package: "reader"
-  sourcePath: "reader/*.go"
+- package: "raw"
+  sourcePath: "raw/*.go"
   ignoredPaths: []
   templatePaths: ["constructor.tpl"]
-  destinationPath: "reader/constructor.go"
+  destinationPath: "raw/constructor.go"
