@@ -5,6 +5,7 @@ import (
 	"go/parser"
 	"go/token"
 	"io/ioutil"
+	"path/filepath"
 
 	"github.com/constructor/raw"
 )
@@ -14,10 +15,16 @@ type Code interface {
 }
 type CodeImpl struct{}
 
-func (impl CodeImpl) Read(filePath raw.Path) (code raw.Code) {
-	code.FilePath = filePath
-	for typeName, structure := range parseASTStructs(parseASTFile(code.FilePath)) {
-		code.Structs = append(code.Structs, convert(typeName, structure))
+func (impl CodeImpl) Read(sourcePath raw.Path) (code raw.Code) {
+	filePaths, err := filepath.Glob(sourcePath)
+	if err != nil {
+		panic(err)
+	}
+	for _, filePath := range filePaths {
+		code.FilePath = filePath
+		for typeName, structure := range parseASTStructs(parseASTFile(code.FilePath)) {
+			code.Structs = append(code.Structs, convert(typeName, structure))
+		}
 	}
 	return
 }

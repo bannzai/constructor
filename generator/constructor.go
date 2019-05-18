@@ -3,6 +3,7 @@ package generator
 import (
 	"context"
 	"html/template"
+	"path/filepath"
 
 	"github.com/constructor/raw"
 	"github.com/constructor/reader"
@@ -27,13 +28,16 @@ func (impl ConstructorImpl) Generate(ctx context.Context) {
 			templates = append(templates, impl.TemplateReader.Read(path))
 		}
 
-		code := reader.CodeImpl{}.Read(packagePath(definition))
+		codes := []raw.Code{}
+		for _, filePath := range sourceFilePaths(definition) {
+			codes = append(codes, impl.SourceCodeReader.Read(filePath))
+		}
 
 		for _, template := range templates {
 			generateSources = append(generateSources, generateComponent{
 				Package:         definition.Package,
 				Template:        template,
-				SourceCode:      code,
+				SourceCodes:     codes,
 				DestinationPath: definition.DestinationPath,
 			})
 		}
@@ -51,6 +55,10 @@ func templateFilePaths(definition raw.Definition) []raw.Path {
 	return definition.TemplateFilePaths
 }
 
-func packagePath(definition raw.Definition) raw.Path {
-	return definition.PackagePath
+func sourceFilePaths(definition raw.Definition) []raw.Path {
+	filePaths, err := filepath.Glob(definition.SourcePath)
+	if err != nil {
+		panic(err)
+	}
+	return filePaths
 }

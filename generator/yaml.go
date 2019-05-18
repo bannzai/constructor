@@ -20,7 +20,7 @@ func (Yaml) Setup() {
 		Definitions: []raw.Definition{
 			raw.Definition{
 				Package:           "",
-				PackagePath:       "",
+				SourcePath:        "",
 				IgnoredPaths:      []raw.Path{},
 				TemplateFilePaths: []raw.Path{},
 				DestinationPath:   "",

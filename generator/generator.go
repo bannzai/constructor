@@ -10,7 +10,7 @@ import (
 type generateComponent struct {
 	Package         string
 	Template        *template.Template
-	SourceCode      raw.Code
+	SourceCodes     []raw.Code
 	DestinationPath raw.Path
 }
 
@@ -20,14 +20,18 @@ var functions = template.FuncMap{
 	"argumentCase":   lowerCamelCase,
 }
 
-func (t generateComponent) Content() []byte {
+func (g generateComponent) Content() []byte {
 	buf := &bytes.Buffer{}
-	if err := t.Template.Funcs(functions).Execute(buf, map[string]interface{}{
-		"Package":        t.Package,
-		"SourceFilePath": t.SourceCode.FilePath,
-		"Structs":        t.SourceCode.Structs,
-	}); err != nil {
-		panic(err)
+	t := g.Template.Funcs(functions)
+
+	for _, sourceCode := range g.SourceCodes {
+		if err := t.Execute(buf, map[string]interface{}{
+			"Package":        g.Package,
+			"SourceFilePath": sourceCode.FilePath,
+			"Structs":        sourceCode.Structs,
+		}); err != nil {
+			panic(err)
+		}
 	}
 	return buf.Bytes()
 }
