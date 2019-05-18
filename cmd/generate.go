@@ -17,7 +17,6 @@ package cmd
 import (
 	"context"
 
-	"github.com/constructor/config"
 	"github.com/constructor/input"
 	"github.com/constructor/output"
 	"github.com/constructor/raw"
@@ -32,17 +31,16 @@ var generateCmd = &cobra.Command{
 constructor generate [/path/to/package] [-c(--config) constructor.yaml].
 `,
 	Run: func(cmd *cobra.Command, args []string) {
-		generate()
+		generate("")
 	},
 }
 
-func generate() {
+func generate(yamlFilePath string) {
 	ctx := context.Background()
-	config.Configuration.YamlFilePath = YamlFilePathName
 	output.ConstructorImpl{
 		YamlReader: input.YamlImpl{
 			Argument: raw.Argument{
-				YamlPath: YamlFilePathName,
+				YamlPath: yamlFilePath,
 			},
 		},
 		TemplateReader:   input.TemplateImpl{},
