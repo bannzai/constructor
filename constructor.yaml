@@ -1,0 +1,6 @@
+definitions:
+- package: ""
+  patckagePath: ""
+  ignoredPaths: []
+  templatePaths: []
+  destinationPath: ""
