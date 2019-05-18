@@ -2,12 +2,10 @@ package output
 
 import (
 	"os"
-
-	"github.com/pkg/errors"
 )
 
 type Template interface {
-	Setup() error
+	Setup()
 }
 type TemplateImpl struct{}
 
@@ -36,12 +34,11 @@ func New{{$structureName}}{{$suffix}}(
 {{end}}
 `
 
-func (impl TemplateImpl) Setup() error {
+func (impl TemplateImpl) Setup() {
 	file, err := os.Create(templateFileName)
 	if err != nil {
-		return errors.Wrap(err, "Can not create "+templateFileName)
+		panic(err)
 	}
 	defer file.Close()
 	file.Write([]byte(defaultTemplate))
-	return nil
 }
