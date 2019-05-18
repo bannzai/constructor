@@ -20,7 +20,7 @@ type ConstructorImpl struct {
 func (impl ConstructorImpl) Generate(ctx context.Context) {
 	yaml := impl.YamlReader.Read()
 
-	generateSources := []Generator{}
+	generateSources := []generateComponent{}
 	for _, definition := range definitions(yaml) {
 		templates := []*template.Template{}
 		for _, path := range templateFilePaths(definition) {
@@ -30,7 +30,7 @@ func (impl ConstructorImpl) Generate(ctx context.Context) {
 		code := reader.CodeImpl{}.Read(packagePath(definition))
 
 		for _, template := range templates {
-			generateSources = append(generateSources, Generator{
+			generateSources = append(generateSources, generateComponent{
 				Package:         definition.Package,
 				Template:        template,
 				SourceCode:      code,
@@ -39,8 +39,8 @@ func (impl ConstructorImpl) Generate(ctx context.Context) {
 		}
 	}
 
-	for _, source := range generateSources {
-		source.Generate()
+	for _, component := range generateSources {
+		writeFile(component.DestinationPath, component.Content())
 	}
 }
 func definitions(yaml raw.Yaml) []raw.Definition {
