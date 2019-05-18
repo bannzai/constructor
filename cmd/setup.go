@@ -15,7 +15,7 @@
 package cmd
 
 import (
-	"github.com/constructor/output"
+	"github.com/constructor/generator"
 	"github.com/spf13/cobra"
 )
 
@@ -27,8 +27,8 @@ var setupCmd = &cobra.Command{
 	constructor.yaml is configuration file for "constructor generate".
 	`,
 	Run: func(cmd *cobra.Command, args []string) {
-		output.Template{}.Setup()
-		output.Yaml{}.Setup()
+		generator.Template{}.Setup()
+		generator.Yaml{}.Setup()
 	},
 }
 

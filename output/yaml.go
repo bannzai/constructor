@@ -1,4 +1,4 @@
-package output
+package generator
 
 import (
 	"fmt"
@@ -28,10 +28,10 @@ func (Yaml) Setup() {
 		},
 	}
 
-	output, err := yaml.Marshal(y)
+	generator, err := yaml.Marshal(y)
 	if err != nil {
 		panic(err)
 	}
 
-	writeFile(yamlFilePathName, output)
+	writeFile(yamlFilePathName, generator)
 }
