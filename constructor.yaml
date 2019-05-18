@@ -1,0 +1,6 @@
+definitions:
+- package: ""
+  sourcePaths: []
+  ignoredPaths: []
+  templatePaths: []
+  destinationPath: ""
