@@ -7,14 +7,11 @@ import (
 	yaml "gopkg.in/yaml.v2"
 )
 
-type Yaml interface {
-	Setup()
-}
-type YamlImpl struct{}
+type Yaml struct{}
 
 const yamlFilePathName = "constructor.yaml"
 
-func (YamlImpl) Setup() {
+func (Yaml) Setup() {
 	y := raw.Yaml{
 		Definitions: []raw.Definition{
 			raw.Definition{

@@ -28,7 +28,7 @@ var setupCmd = &cobra.Command{
 	`,
 	Run: func(cmd *cobra.Command, args []string) {
 		output.TemplateImpl{}.Setup()
-		output.YamlImpl{}.Setup()
+		output.Yaml{}.Setup()
 	},
 }
 
