@@ -2,6 +2,8 @@ package generator
 
 import (
 	"fmt"
+
+	"github.com/constructor/file"
 )
 
 type Template struct{}
@@ -35,9 +37,9 @@ func New{{$structureName}}{{$suffix}}(
 `
 
 func (impl Template) Setup() {
-	if fileExists(templateFileName) {
+	if file.FileExists(templateFileName) {
 		fmt.Println(templateFileName + " is already exists. Not generate " + templateFileName)
 		return
 	}
-	writeFile(templateFileName, []byte(defaultTemplate))
+	file.WriteFile(templateFileName, []byte(defaultTemplate))
 }

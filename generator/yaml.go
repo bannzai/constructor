@@ -3,6 +3,7 @@ package generator
 import (
 	"fmt"
 
+	"github.com/constructor/file"
 	"github.com/constructor/raw"
 	yaml "gopkg.in/yaml.v2"
 )
@@ -12,7 +13,7 @@ type Yaml struct{}
 const yamlFilePathName = "constructor.yaml"
 
 func (Yaml) Setup() {
-	if fileExists(yamlFilePathName) {
+	if file.FileExists(yamlFilePathName) {
 		fmt.Println(yamlFilePathName + " is already exists. Not generate " + yamlFilePathName)
 		return
 	}
@@ -33,5 +34,5 @@ func (Yaml) Setup() {
 		panic(err)
 	}
 
-	writeFile(yamlFilePathName, generator)
+	file.WriteFile(yamlFilePathName, generator)
 }

@@ -5,6 +5,7 @@ import (
 	"html/template"
 	"path/filepath"
 
+	"github.com/constructor/file"
 	"github.com/constructor/raw"
 	"github.com/constructor/reader"
 )
@@ -44,7 +45,7 @@ func (impl ConstructorImpl) Generate(ctx context.Context) {
 	}
 
 	for _, component := range generateSources {
-		writeFile(component.DestinationPath, component.Content())
+		file.WriteFile(component.DestinationPath, component.Content())
 	}
 }
 func definitions(yaml raw.Yaml) []raw.Definition {
