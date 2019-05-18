@@ -15,8 +15,7 @@
 package cmd
 
 import (
-	"fmt"
-
+	"github.com/constructor/output"
 	"github.com/spf13/cobra"
 )
 
@@ -30,7 +29,7 @@ var setupCmd = &cobra.Command{
 	constructor.yaml is configuration file for "constructor generate".
 	`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("setup called")
+		output.TemplateImpl{}.Setup()
 	},
 }
 
