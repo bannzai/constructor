@@ -4,10 +4,7 @@ import (
 	"os"
 )
 
-type Template interface {
-	Setup()
-}
-type TemplateImpl struct{}
+type Template struct{}
 
 const templateFileName = "constructor.tpl"
 const defaultTemplate = `
@@ -34,7 +31,7 @@ func New{{$structureName}}{{$suffix}}(
 {{end}}
 `
 
-func (impl TemplateImpl) Setup() {
+func (impl Template) Setup() {
 	file, err := os.Create(templateFileName)
 	if err != nil {
 		panic(err)

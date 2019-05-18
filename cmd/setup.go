@@ -27,7 +27,7 @@ var setupCmd = &cobra.Command{
 	constructor.yaml is configuration file for "constructor generate".
 	`,
 	Run: func(cmd *cobra.Command, args []string) {
-		output.TemplateImpl{}.Setup()
+		output.Template{}.Setup()
 		output.Yaml{}.Setup()
 	},
 }
