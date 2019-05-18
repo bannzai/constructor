@@ -1,10 +1,17 @@
 package output
 
+import (
+	"os"
+
+	"github.com/pkg/errors"
+)
+
 type Template interface {
 	Setup() error
 }
 type TemplateImpl struct{}
 
+const templateFileName = "constructor.tpl"
 const defaultTemplate = `
 
 {{- $dot := . -}}
@@ -30,5 +37,11 @@ func New{{$structureName}}{{$suffix}}(
 `
 
 func (impl TemplateImpl) Setup() error {
+	file, err := os.Create(templateFileName)
+	if err != nil {
+		return errors.Wrap(err, "Can not create "+templateFileName)
+	}
+	defer file.Close()
+	file.Write([]byte(defaultTemplate))
 	return nil
 }
