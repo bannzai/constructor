@@ -18,5 +18,5 @@ func writeFile(destinationPath string, content []byte) {
 	if err := ioutil.WriteFile(destinationPath, content, 0644); err != nil {
 		panic(err)
 	}
-	fmt.Printf("Generated %s.", destinationPath)
+	fmt.Fprintf(os.Stdout, "Generated %s.", destinationPath)
 }
