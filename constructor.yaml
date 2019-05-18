@@ -3,4 +3,4 @@ definitions:
   sourcePath: "reader/*.go"
   ignoredPaths: []
   templatePaths: ["constructor.tpl"]
-  destinationPath: "reader"
+  destinationPath: "reader/constructor.go"
