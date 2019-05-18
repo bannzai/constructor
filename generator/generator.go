@@ -38,6 +38,7 @@ func upperCamelCase(target string) string {
 
 func (t Generator) Generate() {
 	if err := t.Template.Funcs(functions).Execute(t.Writer, map[string]interface{}{
+		"Package":        t.Package,
 		"SourceFilePath": t.SourceCode.FilePath,
 		"Structs":        t.SourceCode.Structs,
 	}); err != nil {
