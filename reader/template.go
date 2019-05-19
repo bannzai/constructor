@@ -32,13 +32,13 @@ func escapeReservedWord(target string) string {
 func lowerCamelCase(target string) string {
 	firstString := strings.ToLower(target[:1])
 	dropedFirstString := target[1:]
-	return firstString + dropedFirstString
+	return escapeReservedWord(firstString + dropedFirstString)
 }
 
 func upperCamelCase(target string) string {
 	firstString := strings.ToUpper(target[:1])
 	dropedFirstString := target[1:]
-	return firstString + dropedFirstString
+	return escapeReservedWord(firstString + dropedFirstString)
 }
 
 func (impl TemplateImpl) Read(filePath raw.Path) *template.Template {
