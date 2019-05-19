@@ -13,9 +13,20 @@ type Template interface {
 type TemplateImpl struct{}
 
 var functions = template.FuncMap{
-	"upperCamelCase": upperCamelCase,
-	"parameterCase":  lowerCamelCase,
-	"argumentCase":   lowerCamelCase,
+	"upperCamelCase":     upperCamelCase,
+	"parameterCase":      lowerCamelCase,
+	"argumentCase":       lowerCamelCase,
+	"escapeReservedWord": escapeReservedWord,
+}
+
+func escapeReservedWord(target string) string {
+	for _, reservedWord := range raw.ReservedWords {
+		if reservedWord == target {
+			return "_" + target
+		}
+	}
+
+	return target
 }
 
 func lowerCamelCase(target string) string {
