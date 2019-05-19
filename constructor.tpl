@@ -7,17 +7,17 @@ package {{.Package}}
 
 {{range $i, $field := .Structs -}}
 {{- $suffix := upperCamelCase $dot.Package -}}
-{{- $structureName := $dot.Name -}}
-// New{{$structureName}}{{$suffix}} insitanciate {{$dot.Name}}
+{{- $structureName := .Name -}}
+// New{{$structureName}}{{$suffix}} insitanciate {{.Name}}
 func New{{$structureName}}{{$suffix}}(
-	{{range $i, $field := $dot.Fields -}}
-		{{parameterCase $field.Name}} {{$field.Name}},
-	{{end}}
+	{{range $i, $field := .Fields -}}
+		{{parameterCase $field.Name}} {{$field.Type}},
+	{{end -}}
 ) {{$structureName}} {
-	return {{$structureName}}{{$suffix}}{
-		{{range $i, $field := $dot.Fields -}}
+	return {{$structureName}}{
+		{{range $i, $field := .Fields -}}
 			{{$field.Name}}: {{argumentCase $field.Name}},
-		{{end}}
+		{{end -}}
 	}
 }
 {{end}}
