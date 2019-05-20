@@ -1,5 +1,7 @@
 package raw
 
+const YamlFilePathName = "constructor.yaml"
+
 type (
 	// Yaml is file data for format of .yaml
 	Yaml struct {

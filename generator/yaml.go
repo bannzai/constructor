@@ -10,11 +10,9 @@ import (
 
 type Yaml struct{}
 
-const yamlFilePathName = "constructor.yaml"
-
 func (Yaml) Setup() {
-	if file.FileExists(yamlFilePathName) {
-		fmt.Println(yamlFilePathName + " is already exists. Not generate " + yamlFilePathName)
+	if file.FileExists(raw.YamlFilePathName) {
+		fmt.Println(raw.YamlFilePathName + " is already exists. Not generate " + raw.YamlFilePathName)
 		return
 	}
 	y := raw.Yaml{
@@ -34,5 +32,5 @@ func (Yaml) Setup() {
 		panic(err)
 	}
 
-	file.WriteFile(yamlFilePathName, generator)
+	file.WriteFile(raw.YamlFilePathName, generator)
 }
