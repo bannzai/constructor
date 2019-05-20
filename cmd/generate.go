@@ -23,6 +23,12 @@ import (
 	"github.com/spf13/cobra"
 )
 
+type GenerateOptions struct {
+	yamlFilePath string
+}
+
+var generateOptions = GenerateOptions{}
+
 // generateCmd represents the generate command
 var generateCmd = &cobra.Command{
 	Use:   "generate",
@@ -50,6 +56,7 @@ func generate(yamlFilePath string) {
 
 func init() {
 	rootCmd.AddCommand(generateCmd)
+	generateCmd.Flags().StringVarP(&generateOptions.yamlFilePath, "configure", "c", raw.YamlFilePathName, "Specify configure file")
 
 	// Here you will define your flags and configuration settings.
 
