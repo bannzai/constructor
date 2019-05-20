@@ -37,7 +37,7 @@ var generateCmd = &cobra.Command{
 constructor generate [/path/to/package] [-c(--config) constructor.yaml].
 `,
 	Run: func(cmd *cobra.Command, args []string) {
-		generate("./constructor.yaml")
+		generate(generateOptions.yamlFilePath)
 	},
 }
 
