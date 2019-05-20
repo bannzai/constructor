@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"os/exec"
 )
 
 func FileExists(fileName string) bool {
@@ -19,4 +20,10 @@ func WriteFile(destinationPath string, content []byte) {
 		panic(err)
 	}
 	fmt.Fprintf(os.Stdout, "Generated %s. \n", destinationPath)
+}
+
+func GoFormat(path string) {
+	if err := exec.Command("gofmt", "-w", path).Run(); err != nil {
+		panic(err)
+	}
 }
