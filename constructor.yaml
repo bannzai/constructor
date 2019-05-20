@@ -4,3 +4,8 @@ definitions:
   ignoredPaths: []
   templatePaths: ["constructor.tpl"]
   destinationPath: "raw/constructor.go"
+- package: "generator"
+  sourcePath: "generator/*.go"
+  ignoredPaths: []
+  templatePaths: ["constructor.tpl"]
+  destinationPath: "generator/constructors.go"
