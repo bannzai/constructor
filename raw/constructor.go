@@ -21,12 +21,16 @@ func NewCodeRaw(
 	}
 }
 
-// NewStructRaw insitanciate Struct
-func NewStructRaw(
-	name string,
-) Struct {
-	return Struct{
-		Name: name,
+// NewDefinitionRaw insitanciate Definition
+func NewDefinitionRaw(
+	_package string,
+	sourcePath Path,
+	destinationPath Path,
+) Definition {
+	return Definition{
+		Package:         _package,
+		SourcePath:      sourcePath,
+		DestinationPath: destinationPath,
 	}
 }
 
@@ -41,20 +45,16 @@ func NewFieldRaw(
 	}
 }
 
+// NewStructRaw insitanciate Struct
+func NewStructRaw(
+	name string,
+) Struct {
+	return Struct{
+		Name: name,
+	}
+}
+
 // NewYamlRaw insitanciate Yaml
 func NewYamlRaw() Yaml {
 	return Yaml{}
-}
-
-// NewDefinitionRaw insitanciate Definition
-func NewDefinitionRaw(
-	_package string,
-	sourcePath Path,
-	destinationPath Path,
-) Definition {
-	return Definition{
-		Package:         _package,
-		SourcePath:      sourcePath,
-		DestinationPath: destinationPath,
-	}
 }
