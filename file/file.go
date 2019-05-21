@@ -27,3 +27,9 @@ func GoFormat(path string) {
 		panic(err)
 	}
 }
+
+func GoImports(path string) {
+	if err := exec.Command("goimports", "-w", path).Run(); err != nil {
+		panic(err)
+	}
+}

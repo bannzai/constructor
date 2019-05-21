@@ -46,6 +46,7 @@ func (impl ConstructorImpl) Generate(ctx context.Context) {
 
 	for _, component := range generateSources {
 		file.WriteFile(component.DestinationPath, component.Content())
+		file.GoImports(component.DestinationPath)
 		file.GoFormat(component.DestinationPath)
 	}
 }
