@@ -116,6 +116,10 @@ func convert(typeName string, astStruct *ast.StructType) raw.Struct {
 			return true
 		}
 
+		if isIgnoreConstructor(field) {
+			return true
+		}
+
 		switch types := field.Type.(type) {
 		case *ast.Ident:
 			fieldTypeName := types.Name
