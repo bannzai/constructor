@@ -43,6 +43,10 @@ func TestCodeImpl_Read(t *testing.T) {
 								Name: "P",
 								Type: "string",
 							},
+							raw.Field{
+								Name: "T",
+								Type: "io.Writer",
+							},
 						},
 					},
 				},
