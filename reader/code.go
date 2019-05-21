@@ -90,7 +90,7 @@ func parseASTStructs(file *ast.File) (typeNameAndStruct map[string]*ast.StructTy
 	return
 }
 
-func isIgnoreConstructor(field *ast.Field) bool {
+func hasIgnoreTag(field *ast.Field) bool {
 	if field.Tag == nil {
 		return false
 	}
@@ -101,7 +101,7 @@ func isIgnoreConstructor(field *ast.Field) bool {
 		return false
 	}
 
-	return field.Tag.Value[len(annotation):len(annotation)+len("true")] == "true" // FIXME: Good code
+	return field.Tag.Value[len(annotation):len(annotation)+1+len("true")] == "true" // FIXME: Good code
 }
 
 type TypeAndNames = map[string][]string
@@ -119,7 +119,7 @@ func convert(typeName string, astStruct *ast.StructType) raw.Struct {
 			return true
 		}
 
-		if isIgnoreConstructor(field) {
+		if hasIgnoreTag(field) {
 			return true
 		}
 
