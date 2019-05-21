@@ -5,6 +5,7 @@ import (
 	"go/parser"
 	"go/token"
 	"io/ioutil"
+	"sort"
 
 	"github.com/constructor/raw"
 )
@@ -14,11 +15,36 @@ type Code interface {
 }
 type CodeImpl struct{}
 
+func sortedStructs(structs []raw.Struct) []raw.Struct {
+	sort.SliceStable(structs, func(l, r int) bool {
+		return sort.StringsAreSorted(
+			[]string{
+				structs[l].Name,
+				structs[r].Name,
+			},
+		)
+	})
+	return structs
+}
+
+func sortedFields(fields []raw.Field) []raw.Field {
+	sort.SliceStable(fields, func(l, r int) bool {
+		return sort.StringsAreSorted(
+			[]string{
+				fields[l].Name,
+				fields[r].Name,
+			},
+		)
+	})
+	return fields
+}
+
 func (impl CodeImpl) Read(filePath raw.Path) (code raw.Code) {
 	code.FilePath = filePath
 	for typeName, structure := range parseASTStructs(parseASTFile(code.FilePath)) {
 		code.Structs = append(code.Structs, convert(typeName, structure))
 	}
+	code.Structs = sortedStructs(code.Structs)
 	return
 }
 
@@ -140,6 +166,8 @@ func convert(typeName string, astStruct *ast.StructType) raw.Struct {
 			})
 		}
 	}
+
+	fields = sortedFields(fields)
 
 	return raw.Struct{
 		Name:   typeName,

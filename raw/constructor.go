@@ -23,14 +23,14 @@ func NewCodeRaw(
 
 // NewDefinitionRaw insitanciate Definition
 func NewDefinitionRaw(
-	_package string,
 	sourcePath Path,
 	destinationPath Path,
+	_package string,
 ) Definition {
 	return Definition{
-		Package:         _package,
 		SourcePath:      sourcePath,
 		DestinationPath: destinationPath,
+		Package:         _package,
 	}
 }
 
