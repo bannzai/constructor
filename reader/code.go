@@ -94,13 +94,13 @@ func isIgnoreConstructor(field *ast.Field) bool {
 		return false
 	}
 
+	separator := ":"
 	annotation := raw.IgnoreCaseKeyword + separator
 	if !strings.Contains(field.Tag.Value, annotation) {
 		return false
 	}
 
-	length := headIndex + len(annotation)
-	return field.Tag.Value[length:length+len("true")] == "true" // FIXME: Good code
+	return field.Tag.Value[len(annotation):len(annotation)+len("true")] == "true" // FIXME: Good code
 }
 
 func convert(typeName string, astStruct *ast.StructType) raw.Struct {
