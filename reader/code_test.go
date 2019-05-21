@@ -44,8 +44,24 @@ func TestCodeImpl_Read(t *testing.T) {
 								Type: "[]int",
 							},
 							raw.Field{
+								Name: "LO",
+								Type: "[]io.Writer",
+							},
+							raw.Field{
 								Name: "M",
 								Type: "map[string]bool",
+							},
+							raw.Field{
+								Name: "MKO",
+								Type: "map[io.Writer]bool",
+							},
+							raw.Field{
+								Name: "MKVO",
+								Type: "map[io.Writer]io.Writer",
+							},
+							raw.Field{
+								Name: "MVO",
+								Type: "map[string]io.Writer",
 							},
 							raw.Field{
 								Name: "O",
@@ -66,7 +82,7 @@ func TestCodeImpl_Read(t *testing.T) {
 			impl := CodeImpl{}
 			got := impl.Read(tt.args.FilePath)
 			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("Read() = %v, want %v", got, tt.want)
+				t.Errorf("Read() = %v,\n want %v", got, tt.want)
 			}
 		})
 	}

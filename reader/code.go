@@ -159,7 +159,7 @@ func convert(typeName string, astStruct *ast.StructType) raw.Struct {
 				x, sel := parseSelectorExpr(k)
 				key = x + "." + sel
 			}
-			if v, ok := types.Key.(*ast.SelectorExpr); ok {
+			if v, ok := types.Value.(*ast.SelectorExpr); ok {
 				x, sel := parseSelectorExpr(v)
 				value = x + "." + sel
 			}
