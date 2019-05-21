@@ -101,7 +101,8 @@ func hasIgnoreTag(field *ast.Field) bool {
 		return false
 	}
 
-	return field.Tag.Value[len(annotation):len(annotation)+1+len("true")] == "true" // FIXME: Good code
+	head := "`" + annotation
+	return field.Tag.Value[len(head):len(head)+len("true")] == "true" // FIXME: Good code
 }
 
 type TypeAndNames = map[string][]string
