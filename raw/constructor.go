@@ -14,12 +14,10 @@ func NewArgumentRaw(
 
 // NewCodeRaw insitanciate Code
 func NewCodeRaw(
-	filePath Path,
 	structs []Struct,
 ) Code {
 	return Code{
-		FilePath: filePath,
-		Structs:  structs,
+		Structs: structs,
 	}
 }
 
