@@ -40,6 +40,14 @@ func TestCodeImpl_Read(t *testing.T) {
 								Type: "func(aaa int, bbb bool) string",
 							},
 							raw.Field{
+								Name: "L",
+								Type: "[]int",
+							},
+							raw.Field{
+								Name: "M",
+								Type: "map[string]bool",
+							},
+							raw.Field{
 								Name: "P",
 								Type: "string",
 							},
