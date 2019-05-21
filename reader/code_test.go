@@ -32,16 +32,16 @@ func TestCodeImpl_Read(t *testing.T) {
 						Name: "Struct",
 						Fields: []raw.Field{
 							raw.Field{
-								Name: "P",
-								Type: "string",
+								Name: "A",
+								Type: "Alias",
 							},
 							raw.Field{
 								Name: "F",
 								Type: "func(aaa int, bbb bool) string",
 							},
 							raw.Field{
-								Name: "A",
-								Type: "Alias",
+								Name: "P",
+								Type: "string",
 							},
 						},
 					},
