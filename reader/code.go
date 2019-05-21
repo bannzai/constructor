@@ -45,6 +45,7 @@ func sortedFields(fields []raw.Field) []raw.Field {
 func (impl CodeImpl) Read(filePath raw.Path) (code raw.Code) {
 	code.FilePath = filePath
 	for typeName, structure := range parseASTStructs(parseASTFile(code.FilePath)) {
+		fmt.Printf("start: %s %s\n", code.FilePath, typeName)
 		code.Structs = append(code.Structs, convert(typeName, structure))
 	}
 	code.Structs = sortedStructs(code.Structs)
@@ -103,8 +104,10 @@ func isIgnoreConstructor(field *ast.Field) bool {
 	return field.Tag.Value[len(annotation):len(annotation)+len("true")] == "true" // FIXME: Good code
 }
 
+type TypeAndNames = map[string][]string
+
 func convert(typeName string, astStruct *ast.StructType) raw.Struct {
-	typeAndNames := map[string][]string{}
+	typeAndNames := TypeAndNames{}
 	ast.Inspect(astStruct, func(node ast.Node) bool {
 		lastChildNode := node == nil
 		if lastChildNode {
@@ -128,25 +131,47 @@ func convert(typeName string, astStruct *ast.StructType) raw.Struct {
 				typeAndNames[fieldTypeName] = append(typeAndNames[fieldTypeName], name)
 			}
 		case *ast.ArrayType:
-			ident, ok := types.Elt.(*ast.Ident)
-			if !ok {
+			var fieldTypeName string
+			if selector, ok := types.Elt.(*ast.SelectorExpr); ok {
+				x, sel := parseSelectorExpr(selector)
+				fieldTypeName = "[]" + x + "." + sel
+			}
+			if ident, ok := types.Elt.(*ast.Ident); ok {
+				fieldTypeName = "[]" + ident.Name
+			}
+			if len(fieldTypeName) == 0 {
 				panic(fmt.Errorf("Unknown pattern when ast.ArrayType.Elt receive %v", reflect.TypeOf(types.Elt)))
 			}
-			fieldTypeName := "[]" + ident.Name
 			for _, nameIdentifier := range field.Names {
 				name := nameIdentifier.Name
 				typeAndNames[fieldTypeName] = append(typeAndNames[fieldTypeName], name)
 			}
 		case *ast.MapType:
-			key, ok := types.Key.(*ast.Ident)
-			if !ok {
+			var key string
+			var value string
+			if k, ok := types.Key.(*ast.Ident); ok {
+				key = k.Name
+			}
+			if v, ok := types.Value.(*ast.Ident); ok {
+				value = v.Name
+			}
+			if k, ok := types.Key.(*ast.SelectorExpr); ok {
+				x, sel := parseSelectorExpr(k)
+				key = x + "." + sel
+			}
+			if v, ok := types.Key.(*ast.SelectorExpr); ok {
+				x, sel := parseSelectorExpr(v)
+				value = x + "." + sel
+			}
+
+			if len(key) == 0 {
 				panic(fmt.Errorf("Unknown pattern when ast.MapType.Key receive %v", reflect.TypeOf(types.Key)))
 			}
-			value, ok := types.Value.(*ast.Ident)
-			if !ok {
+			if len(value) == 0 {
 				panic(fmt.Errorf("Unknown pattern when ast.MapType.Value receive %v", reflect.TypeOf(types.Value)))
 			}
-			fieldTypeName := "map[" + key.Name + "]" + value.Name
+
+			fieldTypeName := "map[" + key + "]" + value
 			for _, nameIdentifier := range field.Names {
 				name := nameIdentifier.Name
 				typeAndNames[fieldTypeName] = append(typeAndNames[fieldTypeName], name)
@@ -199,11 +224,8 @@ func convert(typeName string, astStruct *ast.StructType) raw.Struct {
 			// It will duplicate call function
 			return false
 		case *ast.SelectorExpr:
-			x, ok := types.X.(*ast.Ident)
-			if !ok {
-				panic(fmt.Errorf("Unknown pattern when ast.SelectorExpr.X receive %v", reflect.TypeOf(types.X)))
-			}
-			fieldTypeName := x.Name + "." + types.Sel.Name
+			x, sel := parseSelectorExpr(types)
+			fieldTypeName := x + "." + sel
 			for _, nameIdentifier := range field.Names {
 				name := nameIdentifier.Name
 				typeAndNames[fieldTypeName] = append(typeAndNames[fieldTypeName], name)
@@ -228,4 +250,12 @@ func convert(typeName string, astStruct *ast.StructType) raw.Struct {
 		Name:   typeName,
 		Fields: fields,
 	}
+}
+
+func parseSelectorExpr(types *ast.SelectorExpr) (string, string) {
+	x, ok := types.X.(*ast.Ident)
+	if !ok {
+		panic(fmt.Errorf("Unknown pattern when ast.SelectorExpr.X receive %v", reflect.TypeOf(types.X)))
+	}
+	return x.Name, types.Sel.Name
 }
