@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 	"reflect"
 	"sort"
+	"strings"
 
 	"github.com/constructor/raw"
 )
@@ -86,6 +87,20 @@ func parseASTStructs(file *ast.File) (typeNameAndStruct map[string]*ast.StructTy
 		return true
 	})
 	return
+}
+
+func isIgnoreConstructor(field *ast.Field) bool {
+	if field.Tag == nil {
+		return false
+	}
+
+	annotation := raw.IgnoreCaseKeyword + separator
+	if !strings.Contains(field.Tag.Value, annotation) {
+		return false
+	}
+
+	length := headIndex + len(annotation)
+	return field.Tag.Value[length:length+len("true")] == "true" // FIXME: Good code
 }
 
 func convert(typeName string, astStruct *ast.StructType) raw.Struct {
