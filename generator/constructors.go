@@ -25,10 +25,12 @@ func NewConstructorImplGenerator(
 func NewgenerateComponentGenerator(
 	destinationPath raw.Path,
 	_package string,
+	sourceCodes []raw.Code,
 ) generateComponent {
 	return generateComponent{
 		DestinationPath: destinationPath,
 		Package:         _package,
+		SourceCodes:     sourceCodes,
 	}
 }
 

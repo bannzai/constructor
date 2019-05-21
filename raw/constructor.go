@@ -15,9 +15,11 @@ func NewArgumentRaw(
 // NewCodeRaw insitanciate Code
 func NewCodeRaw(
 	filePath Path,
+	structs []Struct,
 ) Code {
 	return Code{
 		FilePath: filePath,
+		Structs:  structs,
 	}
 }
 
@@ -34,27 +36,37 @@ func NewFieldRaw(
 
 // NewStructRaw insitanciate Struct
 func NewStructRaw(
+	fields []Field,
 	name string,
 ) Struct {
 	return Struct{
-		Name: name,
+		Fields: fields,
+		Name:   name,
 	}
 }
 
 // NewDefinitionRaw insitanciate Definition
 func NewDefinitionRaw(
 	destinationPath Path,
+	ignoredPaths []Path,
 	_package string,
 	sourcePath Path,
+	templateFilePaths []Path,
 ) Definition {
 	return Definition{
-		DestinationPath: destinationPath,
-		Package:         _package,
-		SourcePath:      sourcePath,
+		DestinationPath:   destinationPath,
+		IgnoredPaths:      ignoredPaths,
+		Package:           _package,
+		SourcePath:        sourcePath,
+		TemplateFilePaths: templateFilePaths,
 	}
 }
 
 // NewYamlRaw insitanciate Yaml
-func NewYamlRaw() Yaml {
-	return Yaml{}
+func NewYamlRaw(
+	definitions []Definition,
+) Yaml {
+	return Yaml{
+		Definitions: definitions,
+	}
 }
