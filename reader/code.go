@@ -45,7 +45,7 @@ func sortedFields(fields []raw.Field) []raw.Field {
 func (impl CodeImpl) Read(filePath raw.Path) (code raw.Code) {
 	code.FilePath = filePath
 	for typeName, structure := range parseASTStructs(parseASTFile(code.FilePath)) {
-		fmt.Printf("start: %s %s\n", code.FilePath, typeName)
+		fmt.Printf("[DEBUG] start: %s %s\n", code.FilePath, typeName)
 		code.Structs = append(code.Structs, convert(typeName, structure))
 	}
 	code.Structs = sortedStructs(code.Structs)
