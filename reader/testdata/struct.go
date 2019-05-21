@@ -8,4 +8,6 @@ type Struct struct {
 	F func(aaa int, bbb bool) string
 	A Alias
 	T io.Writer
+	L []int
+	M map[string]bool
 }
