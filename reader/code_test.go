@@ -48,12 +48,12 @@ func TestCodeImpl_Read(t *testing.T) {
 								Type: "map[string]bool",
 							},
 							raw.Field{
-								Name: "P",
-								Type: "string",
+								Name: "O",
+								Type: "io.Writer",
 							},
 							raw.Field{
-								Name: "T",
-								Type: "io.Writer",
+								Name: "P",
+								Type: "string",
 							},
 						},
 					},

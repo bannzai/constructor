@@ -7,7 +7,7 @@ type Struct struct {
 	P string
 	F func(aaa int, bbb bool) string
 	A Alias
-	T io.Writer
+	O io.Writer
 	L []int
 	M map[string]bool
 }
