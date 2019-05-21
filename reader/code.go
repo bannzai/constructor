@@ -1,10 +1,12 @@
 package reader
 
 import (
+	"fmt"
 	"go/ast"
 	"go/parser"
 	"go/token"
 	"io/ioutil"
+	"reflect"
 	"sort"
 
 	"github.com/constructor/raw"
@@ -153,6 +155,16 @@ func convert(typeName string, astStruct *ast.StructType) raw.Struct {
 			// Because ast.FuncType has *ast.Field node.
 			// It will duplicate call function
 			return false
+		case *ast.SelectorExpr:
+			x, ok := types.X.(*ast.Ident)
+			if !ok {
+				panic(fmt.Errorf("Unknown pattern when ast.SelectorExpr.X receive %v", reflect.TypeOf(types.X)))
+			}
+			fieldTypeName := x.Name + "." + types.Sel.Name
+			for _, nameIdentifier := range field.Names {
+				name := nameIdentifier.Name
+				typeAndNames[fieldTypeName] = append(typeAndNames[fieldTypeName], name)
+			}
 		}
 		return true
 	})
