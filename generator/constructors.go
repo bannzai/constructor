@@ -4,16 +4,26 @@
 package generator
 
 // NewConstructorImplGenerator insitanciate ConstructorImpl
-func NewConstructorImplGenerator() ConstructorImpl {
-	return ConstructorImpl{}
+func NewConstructorImplGenerator(
+	sourceCodeReader reader.Code,
+	templateReader reader.Template,
+	yamlReader reader.Yaml,
+) ConstructorImpl {
+	return ConstructorImpl{
+		SourceCodeReader: sourceCodeReader,
+		TemplateReader:   templateReader,
+		YamlReader:       yamlReader,
+	}
 }
 
 // NewgenerateComponentGenerator insitanciate generateComponent
 func NewgenerateComponentGenerator(
+	destinationPath raw.Path,
 	_package string,
 ) generateComponent {
 	return generateComponent{
-		Package: _package,
+		DestinationPath: destinationPath,
+		Package:         _package,
 	}
 }
 
