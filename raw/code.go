@@ -3,7 +3,7 @@ package raw
 type (
 	// Code is presentation of .go file content.
 	Code struct {
-		FilePath Path `ignore_constructor:true`
+		FilePath Path
 		Structs  []Struct
 	}
 	Struct struct {

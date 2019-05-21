@@ -14,4 +14,5 @@ type Struct struct {
 	MKO  map[io.Writer]bool
 	MVO  map[string]io.Writer
 	MKVO map[io.Writer]io.Writer
+	I    string `ignore_constructor:true`
 }
