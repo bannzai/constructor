@@ -21,19 +21,6 @@ func NewCodeRaw(
 	}
 }
 
-// NewDefinitionRaw insitanciate Definition
-func NewDefinitionRaw(
-	sourcePath Path,
-	destinationPath Path,
-	_package string,
-) Definition {
-	return Definition{
-		SourcePath:      sourcePath,
-		DestinationPath: destinationPath,
-		Package:         _package,
-	}
-}
-
 // NewFieldRaw insitanciate Field
 func NewFieldRaw(
 	name string,
@@ -51,6 +38,19 @@ func NewStructRaw(
 ) Struct {
 	return Struct{
 		Name: name,
+	}
+}
+
+// NewDefinitionRaw insitanciate Definition
+func NewDefinitionRaw(
+	destinationPath Path,
+	_package string,
+	sourcePath Path,
+) Definition {
+	return Definition{
+		DestinationPath: destinationPath,
+		Package:         _package,
+		SourcePath:      sourcePath,
 	}
 }
 
