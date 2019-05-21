@@ -4,7 +4,7 @@ type (
 	// Code is presentation of .go file content.
 	Code struct {
 		FilePath Path
-		Structs  []Struct `ignore_constructor:true`
+		Structs  []Struct
 	}
 	Struct struct {
 		Name   string

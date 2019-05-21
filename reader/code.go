@@ -127,6 +127,16 @@ func convert(typeName string, astStruct *ast.StructType) raw.Struct {
 				name := nameIdentifier.Name
 				typeAndNames[fieldTypeName] = append(typeAndNames[fieldTypeName], name)
 			}
+		case *ast.ArrayType:
+			ident, ok := types.Elt.(*ast.Ident)
+			if !ok {
+				panic(fmt.Errorf("Unknown pattern when ast.ArrayType.Elt receive %v", reflect.TypeOf(types.Elt)))
+			}
+			fieldTypeName := "[]" + ident.Name
+			for _, nameIdentifier := range field.Names {
+				name := nameIdentifier.Name
+				typeAndNames[fieldTypeName] = append(typeAndNames[fieldTypeName], name)
+			}
 		case *ast.FuncType:
 			statement := "func("
 			for i, param := range types.Params.List {
