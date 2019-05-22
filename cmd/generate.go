@@ -44,7 +44,7 @@ constructor generate [/path/to/package] [-c(--config) constructor.yaml].
 func generate(yamlFilePath string) {
 	ctx := context.Background()
 	generator.Constructor{
-		YamlReader: reader.YamlImpl{
+		YamlReader: reader.Yaml{
 			Argument: structure.Argument{
 				YamlPath: yamlFilePath,
 			},

@@ -7,18 +7,13 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-// Yaml is interface for read setting yaml file
-type Yaml interface {
-	Read() structure.Yaml
-}
-
-// YamlImpl for implement for Yaml
-type YamlImpl struct {
+// Yaml for implement for Yaml
+type Yaml struct {
 	Argument structure.Argument
 }
 
 // Read for yaml file
-func (impl YamlImpl) Read() structure.Yaml {
+func (impl Yaml) Read() structure.Yaml {
 	buf, err := ioutil.ReadFile(impl.Argument.YamlPath)
 	if err != nil {
 		panic(err)
