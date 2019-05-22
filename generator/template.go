@@ -39,5 +39,5 @@ func (impl Template) Setup() {
 		fmt.Println(structure.TemplateFileName + " is already exists. Not generate " + structure.TemplateFileName)
 		return
 	}
-	file.WriteFile(structure.TemplateFileName, []byte(defaultTemplate))
+	file.WriteFile(structure.TemplateFileName, defaultTemplate)
 }
