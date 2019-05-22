@@ -1,7 +1,6 @@
 package generator
 
 import (
-	"context"
 	"html/template"
 	"path/filepath"
 
@@ -15,7 +14,7 @@ type Constructor struct {
 	SourceCodeReader SourceCodeReader
 }
 
-func (impl Constructor) Generate(ctx context.Context) {
+func (impl Constructor) Generate() {
 	yaml := impl.YamlReader.Read()
 	generateSources := []generateComponent{}
 

@@ -15,8 +15,6 @@
 package cmd
 
 import (
-	"context"
-
 	"github.com/constructor/generator"
 	"github.com/constructor/reader"
 	"github.com/constructor/structure"
@@ -42,7 +40,6 @@ constructor generate [/path/to/package] [-c(--config) constructor.yaml].
 }
 
 func generate(yamlFilePath string) {
-	ctx := context.Background()
 	generator.Constructor{
 		YamlReader: reader.Yaml{
 			Argument: structure.Argument{
@@ -51,7 +48,7 @@ func generate(yamlFilePath string) {
 		},
 		TemplateReader:   reader.Template{},
 		SourceCodeReader: reader.Code{},
-	}.Generate(ctx)
+	}.Generate()
 }
 
 func init() {
