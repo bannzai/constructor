@@ -39,7 +39,7 @@ func TestConstructor_Generate(t *testing.T) {
 						structure.Yaml{
 							Definitions: []structure.Definition{
 								structure.Definition{
-									Package:           "generator",
+									Package:           "abcd",
 									SourcePath:        "source_code.go",
 									IgnoredPaths:      []structure.Path{},
 									TemplateFilePaths: []structure.Path{"template.tpl"},
@@ -76,7 +76,7 @@ func TestConstructor_Generate(t *testing.T) {
 				}(),
 				FileWriter: func() Writer {
 					expect := `
-package {{.Package}}
+package abcd
 struct A{
 	X1
 	Y2
