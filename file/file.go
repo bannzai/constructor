@@ -15,8 +15,8 @@ func FileExists(fileName string) bool {
 	return !file.IsDir()
 }
 
-func WriteFile(destinationPath string, content []byte) {
-	if err := ioutil.WriteFile(destinationPath, content, 0644); err != nil {
+func WriteFile(destinationPath string, content string) {
+	if err := ioutil.WriteFile(destinationPath, []byte(content), 0644); err != nil {
 		panic(err)
 	}
 	fmt.Fprintf(os.Stdout, "Generated %s. \n", destinationPath)

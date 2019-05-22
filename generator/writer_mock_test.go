@@ -5,9 +5,10 @@
 package generator
 
 import (
+	reflect "reflect"
+
 	structure "github.com/constructor/structure"
 	gomock "github.com/golang/mock/gomock"
-	reflect "reflect"
 )
 
 // WriterMock is a mock of Writer interface
@@ -34,7 +35,7 @@ func (m *WriterMock) EXPECT() *WriterMockMockRecorder {
 }
 
 // Write mocks base method
-func (m *WriterMock) Write(destinationPath structure.Path, content []byte) {
+func (m *WriterMock) Write(destinationPath structure.Path, content string) {
 	m.ctrl.Call(m, "Write", destinationPath, content)
 }
 
