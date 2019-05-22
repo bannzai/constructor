@@ -13,10 +13,7 @@ import (
 	"github.com/constructor/structure"
 )
 
-type Code interface {
-	Read(filePath structure.Path) structure.Code
-}
-type CodeImpl struct{}
+type Code struct{}
 
 func sortedStructs(structs []structure.Struct) []structure.Struct {
 	sort.SliceStable(structs, func(l, r int) bool {
@@ -42,7 +39,7 @@ func sortedFields(fields []structure.Field) []structure.Field {
 	return fields
 }
 
-func (impl CodeImpl) Read(filePath structure.Path) (code structure.Code) {
+func (impl Code) Read(filePath structure.Path) (code structure.Code) {
 	code.FilePath = filePath
 	for typeName, structure := range parseASTStructs(parseASTFile(code.FilePath)) {
 		code.Structs = append(code.Structs, convert(typeName, structure))

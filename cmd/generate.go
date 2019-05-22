@@ -50,7 +50,7 @@ func generate(yamlFilePath string) {
 			},
 		},
 		TemplateReader:   reader.Template{},
-		SourceCodeReader: reader.CodeImpl{},
+		SourceCodeReader: reader.Code{},
 	}.Generate(ctx)
 }
 
