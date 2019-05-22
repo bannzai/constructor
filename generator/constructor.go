@@ -6,14 +6,13 @@ import (
 	"path/filepath"
 
 	"github.com/constructor/file"
-	"github.com/constructor/reader"
 	"github.com/constructor/structure"
 )
 
 type Constructor struct {
 	YamlReader       YamlReader
 	TemplateReader   TemplateReader
-	SourceCodeReader reader.Code
+	SourceCodeReader SourceCodeReader
 }
 
 func (impl Constructor) Generate(ctx context.Context) {
