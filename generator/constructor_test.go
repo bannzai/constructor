@@ -1,8 +1,14 @@
 package generator
 
-import "testing"
+import (
+	"testing"
+
+	structure "github.com/constructor/structure"
+	"github.com/golang/mock/gomock"
+)
 
 func TestConstructor_Generate(t *testing.T) {
+	ctrl := gomock.NewController(t)
 	type fields struct {
 		YamlReader       YamlReader
 		TemplateReader   TemplateReader
@@ -13,7 +19,28 @@ func TestConstructor_Generate(t *testing.T) {
 		name   string
 		fields fields
 	}{
-		// TODO: Add test cases.
+		{
+			name: "Successfully generate constructor function",
+			fields: fields{
+				YamlReader: func() YamlReader {
+					mock := NewYamlReaderMock(ctrl)
+					mock.EXPECT().Read().Return(
+						structure.Yaml{
+							Definitions: []structure.Definition{
+								structure.Definition{
+									Package:           "generator",
+									SourcePath:        "",
+									IgnoredPaths:      []structure.Path{},
+									TemplateFilePaths: []structure.Path{},
+									DestinationPath:   "",
+								},
+							},
+						},
+					)
+					return mock
+				}(),
+			},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
