@@ -4,7 +4,6 @@ import (
 	"html/template"
 	"path/filepath"
 
-	"github.com/constructor/file"
 	"github.com/constructor/structure"
 )
 
@@ -12,6 +11,7 @@ type Constructor struct {
 	YamlReader       YamlReader
 	TemplateReader   TemplateReader
 	SourceCodeReader SourceCodeReader
+	FileWriter       Writer
 }
 
 func (impl Constructor) Generate() {
@@ -40,9 +40,7 @@ func (impl Constructor) Generate() {
 	}
 
 	for _, component := range generateSources {
-		file.WriteFile(component.DestinationPath, component.Content())
-		file.GoImports(component.DestinationPath)
-		file.GoFormat(component.DestinationPath)
+		impl.FileWriter.Write(component.DestinationPath, component.Content())
 	}
 }
 func definitions(yaml structure.Yaml) []structure.Definition {
