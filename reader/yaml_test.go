@@ -26,7 +26,7 @@ func TestYamlImpl_Read(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			impl := YamlImpl{
+			impl := Yaml{
 				Argument: tt.fields.argument,
 			}
 			got := impl.Read()

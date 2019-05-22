@@ -24,7 +24,7 @@ func TestTemplateImpl_Read(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			impl := TemplateImpl{}
+			impl := Template{}
 			got := impl.Read(tt.args.FilePath)
 			fmt.Printf("Successfully got: %v ", got)
 		})
