@@ -8,17 +8,15 @@ import (
 	"github.com/golang/mock/gomock"
 )
 
-const testTemplate = `
-package {{.Package}}
-
-{{range $i, $struct := .Structs -}}
-struct {{$struct.Name}} {
-	{{range $i, $field := $struct.Fields -}}
-	{{$field.Name}} {{$field.Type}}
-	{{end}}
-}
-{{end}}
-`
+const testTemplate = "package {{.Package}}\n" +
+	"\n" +
+	"{{range $i, $struct := .Structs -}}\n" +
+	"struct {{$struct.Name}} {\n" +
+	"	{{range $i, $field := $struct.Fields -}}\n" +
+	"	{{$field.Name}} {{$field.Type -}}\n" +
+	"	{{end}}\n" +
+	"}\n" +
+	"{{end -}}\n"
 
 func TestConstructor_Generate(t *testing.T) {
 	ctrl := gomock.NewController(t)
@@ -71,7 +69,7 @@ func TestConstructor_Generate(t *testing.T) {
 									Fields: []structure.Field{
 										structure.Field{
 											Name: "Field",
-											Type: "string",
+											Type: "int",
 										},
 									},
 								},
@@ -90,17 +88,24 @@ func TestConstructor_Generate(t *testing.T) {
 					return mock
 				}(),
 				FileWriter: func() Writer {
-					expect := `
-package abcd
-struct X {
-	Field int
-}
-struct Y {
-	Field string
-}
-						`
+					expect := "package abcd\n" +
+						"\n" +
+						"struct X {\n" +
+						"	Field int\n" +
+						"}\n" +
+						"struct Y {\n" +
+						"	Field string\n" +
+						"}\n"
+
 					mock := NewWriterMock(ctrl)
 					mock.EXPECT().Write("destination.go", expect)
+					return mock
+				}(),
+				FilePathFetcher: func() FilePathFetcher {
+					mock := NewFilePathFetcherMock(ctrl)
+					mock.EXPECT().sourceFilePaths(gomock.Any()).Return(
+						[]structure.Path{"source_code.go"},
+					)
 					return mock
 				}(),
 			},
