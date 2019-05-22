@@ -12,7 +12,7 @@ import (
 
 type Constructor struct {
 	YamlReader       YamlReader
-	TemplateReader   reader.Template
+	TemplateReader   TemplateReader
 	SourceCodeReader reader.Code
 }
 
