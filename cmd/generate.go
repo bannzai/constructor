@@ -18,8 +18,8 @@ import (
 	"context"
 
 	"github.com/constructor/generator"
-	"github.com/constructor/structure"
 	"github.com/constructor/reader"
+	"github.com/constructor/structure"
 	"github.com/spf13/cobra"
 )
 
@@ -43,7 +43,7 @@ constructor generate [/path/to/package] [-c(--config) constructor.yaml].
 
 func generate(yamlFilePath string) {
 	ctx := context.Background()
-	generator.ConstructorImpl{
+	generator.Constructor{
 		YamlReader: reader.YamlImpl{
 			Argument: structure.Argument{
 				YamlPath: yamlFilePath,
