@@ -39,6 +39,23 @@ func TestConstructor_Generate(t *testing.T) {
 					)
 					return mock
 				}(),
+				TemplateReader: func() TemplateReader {
+					mock := NewTemplateReaderMock(ctrl)
+					mock.EXPECT().Read().Return(
+						structure.Yaml{
+							Definitions: []structure.Definition{
+								structure.Definition{
+									Package:           "generator",
+									SourcePath:        "",
+									IgnoredPaths:      []structure.Path{},
+									TemplateFilePaths: []structure.Path{},
+									DestinationPath:   "",
+								},
+							},
+						},
+					)
+					return mock
+				}(),
 			},
 		},
 	}
