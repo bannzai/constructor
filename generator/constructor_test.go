@@ -11,9 +11,11 @@ import (
 const testTemplate = `
 package {{.Package}}
 
-struct A{
 {{range $i, $struct := .Structs -}}
-	{{$struct.Name}}{{$i}}
+struct {{$struct.Name}} {
+	{{range $i, $field := $struct.Fields -}}
+	{{$field.Name}} {{$field.Type}}
+	{{end}}
 }
 {{end}}
 `
@@ -25,6 +27,7 @@ func TestConstructor_Generate(t *testing.T) {
 		TemplateReader   TemplateReader
 		SourceCodeReader SourceCodeReader
 		FileWriter       Writer
+		FilePathFetcher  FilePathFetcher
 	}
 	tests := []struct {
 		name   string
@@ -65,9 +68,21 @@ func TestConstructor_Generate(t *testing.T) {
 							Structs: []structure.Struct{
 								structure.Struct{
 									Name: "X",
+									Fields: []structure.Field{
+										structure.Field{
+											Name: "Field",
+											Type: "string",
+										},
+									},
 								},
 								structure.Struct{
 									Name: "Y",
+									Fields: []structure.Field{
+										structure.Field{
+											Name: "Field",
+											Type: "string",
+										},
+									},
 								},
 							},
 						},
@@ -77,9 +92,11 @@ func TestConstructor_Generate(t *testing.T) {
 				FileWriter: func() Writer {
 					expect := `
 package abcd
-struct A{
-	X1
-	Y2
+struct X {
+	Field int
+}
+struct Y {
+	Field string
 }
 						`
 					mock := NewWriterMock(ctrl)
@@ -96,6 +113,7 @@ struct A{
 				TemplateReader:   tt.fields.TemplateReader,
 				SourceCodeReader: tt.fields.SourceCodeReader,
 				FileWriter:       tt.fields.FileWriter,
+				FilePathFetcher:  tt.fields.FilePathFetcher,
 			}
 			impl.Generate()
 		})

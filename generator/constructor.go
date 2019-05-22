@@ -11,6 +11,7 @@ type Constructor struct {
 	TemplateReader   TemplateReader
 	SourceCodeReader SourceCodeReader
 	FileWriter       Writer
+	FilePathFetcher
 }
 
 func (impl Constructor) Generate() {
@@ -24,7 +25,7 @@ func (impl Constructor) Generate() {
 		}
 
 		codes := []structure.Code{}
-		for _, filePath := range sourceFilePaths(definition) {
+		for _, filePath := range impl.FilePathFetcher.sourceFilePaths(definition) {
 			codes = append(codes, impl.SourceCodeReader.Read(filePath))
 		}
 
