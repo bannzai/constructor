@@ -11,7 +11,7 @@ import (
 )
 
 type Constructor struct {
-	YamlReader       reader.Yaml
+	YamlReader       YamlReader
 	TemplateReader   reader.Template
 	SourceCodeReader reader.Code
 }
