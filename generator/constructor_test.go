@@ -75,15 +75,15 @@ func TestConstructor_Generate(t *testing.T) {
 					return mock
 				}(),
 				FileWriter: func() Writer {
-					expect := `
+					expect := []byte(`
 package abcd
 struct A{
 	X1
 	Y2
 }
-						`
+						`)
 					mock := NewWriterMock(ctrl)
-					mock.EXPECT().Write("destination.go", expect)
+					mock.EXPECT().Write("destination.go", expect).Return()
 					return mock
 				}(),
 			},

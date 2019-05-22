@@ -6,12 +6,12 @@ import (
 )
 
 type Writer interface {
-	Write(destinationPath structure.Path, content string)
+	Write(destinationPath structure.Path, content []byte)
 }
 
 type FileWriter struct{}
 
-func (FileWriter) Write(destinationPath structure.Path, content string) {
+func (FileWriter) Write(destinationPath structure.Path, content []byte) {
 	file.WriteFile(destinationPath, content)
 	file.GoImports(destinationPath)
 	file.GoFormat(destinationPath)

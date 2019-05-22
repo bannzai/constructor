@@ -14,7 +14,7 @@ type generateComponent struct {
 	DestinationPath structure.Path
 }
 
-func (g generateComponent) Content() string {
+func (g generateComponent) Content() []byte {
 	structs := []structure.Struct{}
 	for _, sourceCode := range g.SourceCodes {
 		structs = append(structs, sourceCode.Structs...)
@@ -27,5 +27,5 @@ func (g generateComponent) Content() string {
 	}); err != nil {
 		panic(err)
 	}
-	return buf.String()
+	return buf.Bytes()
 }

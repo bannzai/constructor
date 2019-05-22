@@ -27,10 +27,10 @@ func (Yaml) Setup() {
 		},
 	}
 
-	content, err := yaml.Marshal(y)
+	generator, err := yaml.Marshal(y)
 	if err != nil {
 		panic(err)
 	}
 
-	file.WriteFile(structure.YamlFilePathName, string(content))
+	file.WriteFile(structure.YamlFilePathName, generator)
 }
