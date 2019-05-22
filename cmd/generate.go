@@ -48,6 +48,7 @@ func generate(yamlFilePath string) {
 		},
 		TemplateReader:   reader.Template{},
 		SourceCodeReader: reader.Code{},
+		FileWriter:       generator.FileWriter{},
 	}.Generate()
 }
 
