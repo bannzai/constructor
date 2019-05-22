@@ -7,10 +7,7 @@ import (
 	"github.com/constructor/structure"
 )
 
-type Template interface {
-	Read(filePath structure.Path) *template.Template
-}
-type TemplateImpl struct{}
+type Template struct{}
 
 var functions = template.FuncMap{
 	"upperCamelCase":     upperCamelCase,
@@ -41,6 +38,6 @@ func upperCamelCase(target string) string {
 	return escapeReservedWord(firstString + dropedFirstString)
 }
 
-func (impl TemplateImpl) Read(filePath structure.Path) *template.Template {
+func (impl Template) Read(filePath structure.Path) *template.Template {
 	return template.Must(template.New(filePath).Funcs(functions).ParseFiles(filePath))
 }
