@@ -4,12 +4,12 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/constructor/raw"
+	"github.com/constructor/structure"
 )
 
 func TestYamlImpl_Read(t *testing.T) {
 	type fields struct {
-		argument raw.Argument
+		argument structure.Argument
 	}
 	tests := []struct {
 		name   string
@@ -18,7 +18,7 @@ func TestYamlImpl_Read(t *testing.T) {
 		{
 			name: "Successfully read yaml file.",
 			fields: fields{
-				argument: raw.Argument{
+				argument: structure.Argument{
 					YamlPath: "../constructor.yaml",
 				},
 			},

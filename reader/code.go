@@ -10,15 +10,15 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/constructor/raw"
+	"github.com/constructor/structure"
 )
 
 type Code interface {
-	Read(filePath raw.Path) raw.Code
+	Read(filePath structure.Path) structure.Code
 }
 type CodeImpl struct{}
 
-func sortedStructs(structs []raw.Struct) []raw.Struct {
+func sortedStructs(structs []structure.Struct) []structure.Struct {
 	sort.SliceStable(structs, func(l, r int) bool {
 		return sort.StringsAreSorted(
 			[]string{
@@ -30,7 +30,7 @@ func sortedStructs(structs []raw.Struct) []raw.Struct {
 	return structs
 }
 
-func sortedFields(fields []raw.Field) []raw.Field {
+func sortedFields(fields []structure.Field) []structure.Field {
 	sort.SliceStable(fields, func(l, r int) bool {
 		return sort.StringsAreSorted(
 			[]string{
@@ -42,7 +42,7 @@ func sortedFields(fields []raw.Field) []raw.Field {
 	return fields
 }
 
-func (impl CodeImpl) Read(filePath raw.Path) (code raw.Code) {
+func (impl CodeImpl) Read(filePath structure.Path) (code structure.Code) {
 	code.FilePath = filePath
 	for typeName, structure := range parseASTStructs(parseASTFile(code.FilePath)) {
 		code.Structs = append(code.Structs, convert(typeName, structure))
@@ -51,7 +51,7 @@ func (impl CodeImpl) Read(filePath raw.Path) (code raw.Code) {
 	return
 }
 
-func parseASTFile(filePath raw.Path) *ast.File {
+func parseASTFile(filePath structure.Path) *ast.File {
 	buf, err := ioutil.ReadFile(filePath)
 	if err != nil {
 		panic(err)
@@ -95,7 +95,7 @@ func hasIgnoreTag(field *ast.Field) bool {
 	}
 
 	separator := ":"
-	annotation := raw.IgnoreCaseKeyword + separator
+	annotation := structure.IgnoreCaseKeyword + separator
 	if !strings.Contains(field.Tag.Value, annotation) {
 		return false
 	}
@@ -106,7 +106,7 @@ func hasIgnoreTag(field *ast.Field) bool {
 
 type TypeAndNames = map[string][]string
 
-func convert(typeName string, astStruct *ast.StructType) raw.Struct {
+func convert(typeName string, astStruct *ast.StructType) structure.Struct {
 	typeAndNames := TypeAndNames{}
 	ast.Inspect(astStruct, func(node ast.Node) bool {
 		lastChildNode := node == nil
@@ -234,10 +234,10 @@ func convert(typeName string, astStruct *ast.StructType) raw.Struct {
 		return true
 	})
 
-	fields := []raw.Field{}
+	fields := []structure.Field{}
 	for fieldType, names := range typeAndNames {
 		for _, name := range names {
-			fields = append(fields, raw.Field{
+			fields = append(fields, structure.Field{
 				Name: name,
 				Type: fieldType,
 			})
@@ -246,7 +246,7 @@ func convert(typeName string, astStruct *ast.StructType) raw.Struct {
 
 	fields = sortedFields(fields)
 
-	return raw.Struct{
+	return structure.Struct{
 		Name:   typeName,
 		Fields: fields,
 	}

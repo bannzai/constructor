@@ -4,11 +4,11 @@ import (
 	"html/template"
 	"strings"
 
-	"github.com/constructor/raw"
+	"github.com/constructor/structure"
 )
 
 type Template interface {
-	Read(filePath raw.Path) *template.Template
+	Read(filePath structure.Path) *template.Template
 }
 type TemplateImpl struct{}
 
@@ -20,7 +20,7 @@ var functions = template.FuncMap{
 }
 
 func escapeReservedWord(target string) string {
-	for _, reservedWord := range raw.ReservedWords {
+	for _, reservedWord := range structure.ReservedWords {
 		if reservedWord == target {
 			return "_" + target
 		}
@@ -41,6 +41,6 @@ func upperCamelCase(target string) string {
 	return escapeReservedWord(firstString + dropedFirstString)
 }
 
-func (impl TemplateImpl) Read(filePath raw.Path) *template.Template {
+func (impl TemplateImpl) Read(filePath structure.Path) *template.Template {
 	return template.Must(template.New(filePath).Funcs(functions).ParseFiles(filePath))
 }

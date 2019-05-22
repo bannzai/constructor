@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 
 	"github.com/constructor/file"
-	"github.com/constructor/raw"
+	"github.com/constructor/structure"
 	"github.com/constructor/reader"
 )
 
@@ -29,7 +29,7 @@ func (impl ConstructorImpl) Generate(ctx context.Context) {
 			templates = append(templates, impl.TemplateReader.Read(path))
 		}
 
-		codes := []raw.Code{}
+		codes := []structure.Code{}
 		for _, filePath := range sourceFilePaths(definition) {
 			codes = append(codes, impl.SourceCodeReader.Read(filePath))
 		}
@@ -50,15 +50,15 @@ func (impl ConstructorImpl) Generate(ctx context.Context) {
 		file.GoFormat(component.DestinationPath)
 	}
 }
-func definitions(yaml raw.Yaml) []raw.Definition {
+func definitions(yaml structure.Yaml) []structure.Definition {
 	return yaml.Definitions
 }
 
-func templateFilePaths(definition raw.Definition) []raw.Path {
+func templateFilePaths(definition structure.Definition) []structure.Path {
 	return definition.TemplateFilePaths
 }
 
-func sourceFilePaths(definition raw.Definition) []raw.Path {
+func sourceFilePaths(definition structure.Definition) []structure.Path {
 	filePaths, err := filepath.Glob(definition.SourcePath)
 	if err != nil {
 		panic(err)

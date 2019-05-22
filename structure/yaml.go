@@ -1,4 +1,4 @@
-package raw
+package structure
 
 type (
 	// Yaml is file data for format of .yaml

@@ -18,7 +18,7 @@ import (
 	"context"
 
 	"github.com/constructor/generator"
-	"github.com/constructor/raw"
+	"github.com/constructor/structure"
 	"github.com/constructor/reader"
 	"github.com/spf13/cobra"
 )
@@ -45,7 +45,7 @@ func generate(yamlFilePath string) {
 	ctx := context.Background()
 	generator.ConstructorImpl{
 		YamlReader: reader.YamlImpl{
-			Argument: raw.Argument{
+			Argument: structure.Argument{
 				YamlPath: yamlFilePath,
 			},
 		},
@@ -56,5 +56,5 @@ func generate(yamlFilePath string) {
 
 func init() {
 	rootCmd.AddCommand(generateCmd)
-	generateCmd.Flags().StringVarP(&generateOptions.yamlFilePath, "configure", "c", raw.YamlFilePathName, "Specify configure file")
+	generateCmd.Flags().StringVarP(&generateOptions.yamlFilePath, "configure", "c", structure.YamlFilePathName, "Specify configure file")
 }

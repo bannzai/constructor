@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/constructor/file"
-	"github.com/constructor/raw"
+	"github.com/constructor/structure"
 )
 
 type Template struct{}
@@ -35,9 +35,9 @@ func New{{$structureName}}{{$suffix}}(
 `
 
 func (impl Template) Setup() {
-	if file.FileExists(raw.TemplateFileName) {
-		fmt.Println(raw.TemplateFileName + " is already exists. Not generate " + raw.TemplateFileName)
+	if file.FileExists(structure.TemplateFileName) {
+		fmt.Println(structure.TemplateFileName + " is already exists. Not generate " + structure.TemplateFileName)
 		return
 	}
-	file.WriteFile(raw.TemplateFileName, []byte(defaultTemplate))
+	file.WriteFile(structure.TemplateFileName, []byte(defaultTemplate))
 }

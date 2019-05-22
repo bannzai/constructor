@@ -4,7 +4,7 @@
 package generator
 
 import (
-	"github.com/constructor/raw"
+	"github.com/constructor/structure"
 	"github.com/constructor/reader"
 )
 
@@ -23,9 +23,9 @@ func NewConstructorImplGenerator(
 
 // NewgenerateComponentGenerator insitanciate generateComponent
 func NewgenerateComponentGenerator(
-	destinationPath raw.Path,
+	destinationPath structure.Path,
 	_package string,
-	sourceCodes []raw.Code,
+	sourceCodes []structure.Code,
 ) generateComponent {
 	return generateComponent{
 		DestinationPath: destinationPath,

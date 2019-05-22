@@ -4,12 +4,12 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/constructor/raw"
+	"github.com/constructor/structure"
 )
 
 func TestTemplateImpl_Read(t *testing.T) {
 	type args struct {
-		FilePath raw.Path
+		FilePath structure.Path
 	}
 	tests := []struct {
 		name string

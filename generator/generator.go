@@ -4,18 +4,18 @@ import (
 	"bytes"
 	"html/template"
 
-	"github.com/constructor/raw"
+	"github.com/constructor/structure"
 )
 
 type generateComponent struct {
 	Package         string
 	Template        *template.Template
-	SourceCodes     []raw.Code
-	DestinationPath raw.Path
+	SourceCodes     []structure.Code
+	DestinationPath structure.Path
 }
 
 func (g generateComponent) Content() []byte {
-	structs := []raw.Struct{}
+	structs := []structure.Struct{}
 	for _, sourceCode := range g.SourceCodes {
 		structs = append(structs, sourceCode.Structs...)
 	}

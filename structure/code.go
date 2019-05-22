@@ -1,4 +1,4 @@
-package raw
+package structure
 
 type (
 	// Code is presentation of .go file content.

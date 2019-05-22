@@ -1,4 +1,4 @@
-package raw
+package structure
 
 // ReservedWords reference from: https://golang.org/ref/spec#Keywords
 var ReservedWords = []string{

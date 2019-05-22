@@ -5,7 +5,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/constructor/raw"
+	"github.com/constructor/structure"
 )
 
 const testdataPath = "testdata/"
@@ -18,56 +18,56 @@ func TestCodeImpl_Read(t *testing.T) {
 	tests := []struct {
 		name string
 		args args
-		want raw.Code
+		want structure.Code
 	}{
 		{
 			name: "Successfully read go file.",
 			args: args{
 				FilePath: testdataStructPath,
 			},
-			want: raw.Code{
+			want: structure.Code{
 				FilePath: testdataStructPath,
-				Structs: []raw.Struct{
-					raw.Struct{
+				Structs: []structure.Struct{
+					structure.Struct{
 						Name: "Struct",
-						Fields: []raw.Field{
-							raw.Field{
+						Fields: []structure.Field{
+							structure.Field{
 								Name: "A",
 								Type: "Alias",
 							},
-							raw.Field{
+							structure.Field{
 								Name: "F",
 								Type: "func(aaa int, bbb bool) string",
 							},
-							raw.Field{
+							structure.Field{
 								Name: "L",
 								Type: "[]int",
 							},
-							raw.Field{
+							structure.Field{
 								Name: "LO",
 								Type: "[]io.Writer",
 							},
-							raw.Field{
+							structure.Field{
 								Name: "M",
 								Type: "map[string]bool",
 							},
-							raw.Field{
+							structure.Field{
 								Name: "MKO",
 								Type: "map[io.Writer]bool",
 							},
-							raw.Field{
+							structure.Field{
 								Name: "MKVO",
 								Type: "map[io.Writer]io.Writer",
 							},
-							raw.Field{
+							structure.Field{
 								Name: "MVO",
 								Type: "map[string]io.Writer",
 							},
-							raw.Field{
+							structure.Field{
 								Name: "O",
 								Type: "io.Writer",
 							},
-							raw.Field{
+							structure.Field{
 								Name: "P",
 								Type: "string",
 							},
@@ -90,7 +90,7 @@ func TestCodeImpl_Read(t *testing.T) {
 
 func Test_parseASTFile(t *testing.T) {
 	type args struct {
-		filePath raw.Path
+		filePath structure.Path
 	}
 	tests := []struct {
 		name    string

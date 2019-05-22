@@ -1,4 +1,4 @@
-package raw
+package structure
 
 // Argument command line tools arguments.
 type Argument struct {
