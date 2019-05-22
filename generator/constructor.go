@@ -6,20 +6,17 @@ import (
 	"path/filepath"
 
 	"github.com/constructor/file"
-	"github.com/constructor/structure"
 	"github.com/constructor/reader"
+	"github.com/constructor/structure"
 )
 
-type Constructor interface {
-	Generate(ctx context.Context)
-}
-type ConstructorImpl struct {
+type Constructor struct {
 	YamlReader       reader.Yaml
 	TemplateReader   reader.Template
 	SourceCodeReader reader.Code
 }
 
-func (impl ConstructorImpl) Generate(ctx context.Context) {
+func (impl Constructor) Generate(ctx context.Context) {
 	yaml := impl.YamlReader.Read()
 	generateSources := []generateComponent{}
 
