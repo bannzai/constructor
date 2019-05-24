@@ -1,0 +1,30 @@
+package structure
+
+// ReservedWords reference from: https://golang.org/ref/spec#Keywords
+var ReservedWords = []string{
+	"break",
+	"default",
+	"func",
+	"interface",
+	"select",
+	"case",
+	"defer",
+	"go",
+	"map",
+	"struct",
+	"chan",
+	"else",
+	"goto",
+	"package",
+	"switch",
+	"const",
+	"fallthrough",
+	"if",
+	"range",
+	"type",
+	"continue",
+	"for",
+	"import",
+	"return",
+	"var",
+}
