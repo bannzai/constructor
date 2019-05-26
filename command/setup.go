@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package cmd
+package command
 
 import (
 	"github.com/constructor/generator"
@@ -26,7 +26,7 @@ var setupCmd = &cobra.Command{
 	Long: ` setup will create ./constructor.yaml.
 	constructor.yaml is configuration file for "constructor generate".
 	`,
-	Run: func(cmd *cobra.Command, args []string) {
+	Run: func(command *cobra.Command, args []string) {
 		generator.Template{}.Setup()
 		generator.Yaml{}.Setup()
 	},

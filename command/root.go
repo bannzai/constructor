@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package cmd
+package command
 
 import (
 	"os"
@@ -31,8 +31,8 @@ And you can edit "./constructor.yaml", If you customize generate files. (e.g you
 You get "./constructor.yaml" to execute "constructor setup".
 `,
 	Args: cobra.MinimumNArgs(1),
-	Run: func(cmd *cobra.Command, args []string) {
-		cmd.Help()
+	Run: func(command *cobra.Command, args []string) {
+		command.Help()
 	},
 }
 

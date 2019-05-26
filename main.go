@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/constructor/cmd"
+	"github.com/constructor/command"
 )
 
 func main() {
-	cmd.Execute()
+	command.Execute()
 }

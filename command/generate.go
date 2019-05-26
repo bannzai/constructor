@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package cmd
+package command
 
 import (
 	"github.com/constructor/generator"
@@ -34,7 +34,7 @@ var generateCmd = &cobra.Command{
 	Long: `When use "generate" command, some constructor functions are generated.
 constructor generate [/path/to/package] [-c(--config) constructor.yaml].
 `,
-	Run: func(cmd *cobra.Command, args []string) {
+	Run: func(command *cobra.Command, args []string) {
 		generate(generateOptions.yamlFilePath)
 	},
 }
