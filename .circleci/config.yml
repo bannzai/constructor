@@ -7,10 +7,10 @@ jobs:
     steps:
       - checkout
       - run: 
-        name: install-dependency
-        command: |
-          export GO111MODULE=on
-          make dependency
+          name: install-dependency
+          command: |
+            export GO111MODULE=on
+            make dependency
       - run: make test-verbose
 
 
