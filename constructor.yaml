@@ -1,6 +1,6 @@
 definitions:
-- package: ""
-  sourcePath: ""
-  ignoredPaths: []
-  templatePaths: []
-  destinationPath: ""
+- package: "structure"
+  sourcePath: "./structure/*.go"
+  ignoredPaths: ["structure/argument.go"]
+  templatePaths: ["./constructor.tpl"]
+  destinationPath: "./structure/constructor.go"
