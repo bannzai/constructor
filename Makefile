@@ -18,3 +18,10 @@ delete:
 	rm -f ./structure/constructor.go
 
 reset: delete setup
+
+dependency:
+	go mod vendor
+	go mod download
+
+update-dependency:
+	go mod tidy
