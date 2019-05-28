@@ -8,3 +8,10 @@ jobs:
       - checkout
       - run: make dependency
       - run: make test-verbose
+
+
+workflows:
+  version: 2
+  test:
+    jobs: 
+      - test
