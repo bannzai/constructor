@@ -7,6 +7,9 @@ install:
 test: 
 	go test ./...
 
+test-verbose: 
+	go test ./... -v
+
 setup: 
 	constructor setup
 
