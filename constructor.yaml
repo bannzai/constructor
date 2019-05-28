@@ -1,11 +1,6 @@
 definitions:
-- package: "raw"
-  sourcePath: "raw/*.go"
-  ignoredPaths: []
+- package: "structure"
+  sourcePath: "structure/*.go"
+  ignoredPaths: ["structure/argument.go"]
   templatePaths: ["constructor.tpl"]
-  destinationPath: "raw/constructor.go"
-- package: "generator"
-  sourcePath: "generator/*.go"
-  ignoredPaths: []
-  templatePaths: ["constructor.tpl"]
-  destinationPath: "generator/constructors.go"
+  destinationPath: "structure/constructor.go"

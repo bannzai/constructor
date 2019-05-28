@@ -13,9 +13,32 @@ type FilePathFetcher interface {
 type Glob struct{}
 
 func (Glob) sourceFilePaths(definition structure.Definition) []structure.Path {
-	filePaths, err := filepath.Glob(definition.SourcePath)
+	sourceFilePaths, err := filepath.Glob(definition.SourcePath)
 	if err != nil {
 		panic(err)
 	}
-	return filePaths
+
+	ignoreFilePaths := []string{}
+
+	for _, ignorePath := range definition.IgnoredPaths {
+		ignores, err := filepath.Glob(ignorePath)
+		if err != nil {
+			panic(err)
+		}
+
+		ignoreFilePaths = append(ignoreFilePaths, ignores...)
+	}
+
+	paths := []structure.Path{}
+	for _, sourceFilePath := range sourceFilePaths {
+	inner:
+		for _, ignoreFilePath := range ignoreFilePaths {
+			if sourceFilePath == ignoreFilePath {
+				continue inner
+			}
+			paths = append(paths, sourceFilePath)
+		}
+	}
+
+	return paths
 }
