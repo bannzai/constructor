@@ -13,5 +13,8 @@ setup:
 dry-run:
 	constructor generate
 
-reset: 
+delete:
 	rm -f ./constructor.yaml ./constructor.tpl
+	rm -f ./structure/constructor.go
+
+reset: delete setup
