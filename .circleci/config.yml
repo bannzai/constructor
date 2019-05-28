@@ -3,12 +3,14 @@ jobs:
   test:
     docker:
       - image: circleci/golang:1.12.5
-        environment: 
-          GO111MODULE: on
     working_directory: /go/src/github.com/constructor
     steps:
       - checkout
-      - run: make dependency
+      - run: 
+        name: install-dependency
+        command: |
+          export GO111MODULE=on
+          make dependency
       - run: make test-verbose
 
 
