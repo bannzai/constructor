@@ -12,7 +12,7 @@ type FilePathFetcher interface {
 
 type Glob struct{}
 
-func (Glob) targetFilePaths(definition structure.Definition) []structure.Path {
+func (Glob) sourceFilePaths(definition structure.Definition) []structure.Path {
 	sourceFilePaths, err := filepath.Glob(definition.SourcePath)
 	if err != nil {
 		panic(err)
