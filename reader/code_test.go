@@ -81,6 +81,7 @@ func TestCodeImpl_Read(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			impl := Code{}
 			got := impl.Read(tt.args.FilePath)
+			t.Errorf("Read() = %v,\n want %v", got, tt.want)
 			if !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("Read() = %v,\n want %v", got, tt.want)
 			}
