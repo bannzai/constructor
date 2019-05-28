@@ -19,7 +19,7 @@ func TestYamlImpl_Read(t *testing.T) {
 			name: "Successfully read yaml file.",
 			fields: fields{
 				argument: structure.Argument{
-					YamlPath: "../constructor.yaml",
+					YamlPath: "testdata/constructor.yaml",
 				},
 			},
 		},
