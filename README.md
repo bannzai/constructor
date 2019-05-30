@@ -4,7 +4,7 @@
 Example result.
 ```go
 type Foo struct {
-  Bar: string
+  Bar string
 }
 
 func NewFoo(bar string) Foo {
