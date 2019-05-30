@@ -39,7 +39,9 @@ And you confirm diff between before and after executing it. You found  about con
 $ constructor generate
 ```
 
-<details><summary>Result.</summary>
+<details>
+
+<summary>Result.</summary>
 
 ```go
 $ cat structure/constructors.go                                                                                                                                                     
