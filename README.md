@@ -111,5 +111,29 @@ func NewYamlStructure(
 
 </details>
 
+## Advanced
+### Ignore field
+You guess to be want `ignore field` case.  
+`constructor` prepared `ignore_constructor` tag.
+
+```go
+type Struct struct {
+	I    string `ignore_constructor:true` // <- like this.
+}
+```
+
+### Customize template
+It is possible to use customize template.  
+Two ways for preparing template files.  
+
+1. Edit `constructor.tpl`
+2. Create new `[YOUR_CUSTOMIZE_TEMPLATE].tpl`
+
+If you choose pattern `2`, It can be passed to `constructor generate -c [YOUR_CUSTOMIZE_TEMPLATE].tpl`.
+
+```shell
+$ constructor generate -c [YOUR_CUSTOMIZE_TEMPLATE].tpl
+```
+
 ## LICENSE
 **constructor** is available under the MIT license. See the LICENSE file for more info.
