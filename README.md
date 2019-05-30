@@ -1,6 +1,19 @@
 # constructor
 `constructor` is generated [Constructor](https://golang.org/doc/effective_go.html#composite_literals) for struct.
 
+Example result.
+```go
+type Foo struct {
+  Bar: string
+}
+
+func NewFoo(bar string) Foo {
+  return Foo{
+    Bar: bar,
+  }
+}
+```
+
 ## Install
 Getting `constructor` via `go get`.
 
