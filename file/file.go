@@ -2,6 +2,7 @@ package file
 
 import (
 	"fmt"
+	"go/importer"
 	"io/ioutil"
 	"os"
 	"os/exec"
@@ -29,7 +30,9 @@ func GoFormat(path string) {
 }
 
 func GoImports(path string) {
-	if err := exec.Command("goimports", "-w", path).Run(); err != nil {
+	p, err := importer.Default().Import(path)
+	if err != nil {
 		panic(err)
 	}
+	WriteFile(path, p.String())
 }
