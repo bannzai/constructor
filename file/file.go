@@ -2,10 +2,10 @@ package file
 
 import (
 	"fmt"
-	"go/importer"
 	"io/ioutil"
 	"os"
-	"os/exec"
+
+	"golang.org/x/tools/imports"
 )
 
 func FileExists(fileName string) bool {
@@ -24,15 +24,30 @@ func WriteFile(destinationPath string, content string) {
 }
 
 func GoFormat(path string) {
-	if err := exec.Command("gofmt", "-w", path).Run(); err != nil {
-		panic(err)
-	}
+	// NONE:
 }
 
 func GoImports(path string) {
-	p, err := importer.Default().Import(path)
+	// reference: https://github.com/golang/tools/blob/master/cmd/goimports/goimports.go#L41
+	options := &imports.Options{
+		TabWidth:  8,
+		TabIndent: true,
+		Comments:  true,
+		Fragment:  true,
+	}
+	f, err := os.Open(path)
 	if err != nil {
 		panic(err)
 	}
-	WriteFile(path, p.String())
+	defer f.Close()
+	src, err := ioutil.ReadAll(f)
+	if err != nil {
+		panic(err)
+	}
+
+	res, err := imports.Process(path, src, options)
+	if err != nil {
+		panic(err)
+	}
+	WriteFile(path, string(res))
 }
