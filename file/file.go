@@ -30,10 +30,11 @@ func GoFormat(path string) {
 func GoImports(path string) {
 	// reference: https://github.com/golang/tools/blob/master/cmd/goimports/goimports.go#L41
 	options := &imports.Options{
-		TabWidth:  8,
-		TabIndent: true,
-		Comments:  true,
-		Fragment:  true,
+		TabWidth:   8,
+		TabIndent:  true,
+		Comments:   true,
+		Fragment:   true,
+		FormatOnly: false,
 	}
 	f, err := os.Open(path)
 	if err != nil {
