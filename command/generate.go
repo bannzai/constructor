@@ -46,7 +46,6 @@ func generate() {
 		TemplateReader:   reader.Template{},
 		SourceCodeReader: reader.Code{},
 		FileWriter:       generator.FileWriter{},
-		FilePathFetcher:  generator.Glob{},
 	}.Generate()
 }
 
