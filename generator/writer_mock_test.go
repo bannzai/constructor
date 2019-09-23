@@ -7,7 +7,7 @@ package generator
 import (
 	reflect "reflect"
 
-	structure "github.com/constructor/structure"
+	structure "github.com/bannzai/constructor/structure"
 	gomock "github.com/golang/mock/gomock"
 )
 

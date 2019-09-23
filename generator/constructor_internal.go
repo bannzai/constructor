@@ -1,7 +1,7 @@
 package generator
 
 import (
-	"github.com/constructor/structure"
+	"github.com/bannzai/constructor/structure"
 )
 
 func definitions(yaml structure.Yaml) []structure.Definition {

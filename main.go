@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/constructor/command"
+	"github.com/bannzai/constructor/command"
 )
 
 func main() {

@@ -5,7 +5,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/constructor/structure"
+	"github.com/bannzai/constructor/structure"
 )
 
 const testdataPath = "testdata/"

@@ -4,7 +4,7 @@ import (
 	template "html/template"
 	"testing"
 
-	structure "github.com/constructor/structure"
+	structure "github.com/bannzai/constructor/structure"
 	"github.com/golang/mock/gomock"
 )
 
