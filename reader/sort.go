@@ -3,7 +3,7 @@ package reader
 import (
 	"sort"
 
-	"github.com/constructor/structure"
+	"github.com/bannzai/constructor/structure"
 )
 
 func sortedStructs(structs []structure.Struct) []structure.Struct {

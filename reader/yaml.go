@@ -3,7 +3,7 @@ package reader
 import (
 	"io/ioutil"
 
-	"github.com/constructor/structure"
+	"github.com/bannzai/constructor/structure"
 	"gopkg.in/yaml.v2"
 )
 

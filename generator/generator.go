@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"html/template"
 
-	"github.com/constructor/structure"
+	"github.com/bannzai/constructor/structure"
 )
 
 type generateComponent struct {

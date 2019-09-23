@@ -15,9 +15,9 @@
 package command
 
 import (
-	"github.com/constructor/generator"
-	"github.com/constructor/reader"
-	"github.com/constructor/structure"
+	"github.com/bannzai/constructor/generator"
+	"github.com/bannzai/constructor/reader"
+	"github.com/bannzai/constructor/structure"
 	"github.com/spf13/cobra"
 )
 

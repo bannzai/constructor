@@ -3,7 +3,7 @@ package generator
 import (
 	"html/template"
 
-	"github.com/constructor/structure"
+	"github.com/bannzai/constructor/structure"
 )
 
 type TemplateReader interface {

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/constructor/structure"
+	"github.com/bannzai/constructor/structure"
 )
 
 func TestYamlImpl_Read(t *testing.T) {

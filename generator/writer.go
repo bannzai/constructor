@@ -1,8 +1,8 @@
 package generator
 
 import (
-	"github.com/constructor/file"
-	"github.com/constructor/structure"
+	"github.com/bannzai/constructor/file"
+	"github.com/bannzai/constructor/structure"
 )
 
 type Writer interface {

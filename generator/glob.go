@@ -3,7 +3,7 @@ package generator
 import (
 	"path/filepath"
 
-	"github.com/constructor/structure"
+	"github.com/bannzai/constructor/structure"
 )
 
 type FilePathFetcher interface {

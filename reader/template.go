@@ -4,7 +4,7 @@ import (
 	"html/template"
 	"strings"
 
-	"github.com/constructor/structure"
+	"github.com/bannzai/constructor/structure"
 )
 
 type Template struct{}

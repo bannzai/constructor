@@ -3,8 +3,8 @@ package generator
 import (
 	"fmt"
 
-	"github.com/constructor/file"
-	"github.com/constructor/structure"
+	"github.com/bannzai/constructor/file"
+	"github.com/bannzai/constructor/structure"
 )
 
 type Template struct{}

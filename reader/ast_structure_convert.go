@@ -6,7 +6,7 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/constructor/structure"
+	"github.com/bannzai/constructor/structure"
 )
 
 type TypeAndNames = map[string][]string

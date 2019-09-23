@@ -6,7 +6,7 @@ import (
 	"go/token"
 	"io/ioutil"
 
-	"github.com/constructor/structure"
+	"github.com/bannzai/constructor/structure"
 )
 
 func parseASTFile(filePath structure.Path) *ast.File {

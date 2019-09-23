@@ -1,7 +1,7 @@
 package reader
 
 import (
-	"github.com/constructor/structure"
+	"github.com/bannzai/constructor/structure"
 )
 
 type Code struct{}
