@@ -17,12 +17,14 @@ package command
 import (
 	"github.com/bannzai/constructor/generator"
 	"github.com/bannzai/constructor/reader"
-	"github.com/bannzai/constructor/structure"
 	"github.com/spf13/cobra"
 )
 
 type GenerateOptions struct {
-	yamlFilePath string
+	sourceFilePath      string
+	destinationFilePath string
+	ignoreFields        string
+	templateFilePath    string
 }
 
 var generateOptions = GenerateOptions{}
@@ -35,11 +37,11 @@ var generateCmd = &cobra.Command{
 constructor generate [/path/to/package] [-c(--config) constructor.yaml].
 `,
 	Run: func(command *cobra.Command, args []string) {
-		generate(generateOptions.yamlFilePath)
+		generate()
 	},
 }
 
-func generate(yamlFilePath string) {
+func generate() {
 	generator.Constructor{
 		TemplateReader:   reader.Template{},
 		SourceCodeReader: reader.Code{},
@@ -50,5 +52,8 @@ func generate(yamlFilePath string) {
 
 func init() {
 	rootCmd.AddCommand(generateCmd)
-	generateCmd.Flags().StringVarP(&generateOptions.yamlFilePath, "configure", "c", structure.YamlFilePathName, "Specify configure file")
+	generateCmd.Flags().StringVarP(&generateOptions.sourceFilePath, "source", "", "", "Source go file path")
+	generateCmd.Flags().StringVarP(&generateOptions.destinationFilePath, "destination", "", "", "Destination go file path")
+	generateCmd.Flags().StringVarP(&generateOptions.ignoreFields, "ignoreFields", "", "", "Not contains generated fields. It is list with commas. (e.g id,name,age")
+	generateCmd.Flags().StringVarP(&generateOptions.templateFilePath, "tempalte", "", "", "Constructor functions format template file path")
 }
