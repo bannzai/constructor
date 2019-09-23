@@ -21,11 +21,9 @@ const testTemplate = "package {{.Package}}\n" +
 func TestConstructor_Generate(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	type fields struct {
-		YamlReader       YamlReader
 		TemplateReader   TemplateReader
 		SourceCodeReader SourceCodeReader
 		FileWriter       Writer
-		FilePathFetcher  FilePathFetcher
 	}
 	tests := []struct {
 		name   string
@@ -34,23 +32,6 @@ func TestConstructor_Generate(t *testing.T) {
 		{
 			name: "Successfully generate constructor function",
 			fields: fields{
-				YamlReader: func() YamlReader {
-					mock := NewYamlReaderMock(ctrl)
-					mock.EXPECT().Read().Return(
-						structure.Yaml{
-							Definitions: []structure.Definition{
-								structure.Definition{
-									Package:           "abcd",
-									SourcePath:        "source_code.go",
-									IgnoredPaths:      []structure.Path{},
-									TemplateFilePaths: []structure.Path{"template.tpl"},
-									DestinationPath:   "destination.go",
-								},
-							},
-						},
-					)
-					return mock
-				}(),
 				TemplateReader: func() TemplateReader {
 					mock := NewTemplateReaderMock(ctrl)
 					mock.EXPECT().Read("template.tpl").Return(
@@ -101,24 +82,15 @@ func TestConstructor_Generate(t *testing.T) {
 					mock.EXPECT().Write("destination.go", expect)
 					return mock
 				}(),
-				FilePathFetcher: func() FilePathFetcher {
-					mock := NewFilePathFetcherMock(ctrl)
-					mock.EXPECT().sourceFilePaths(gomock.Any()).Return(
-						[]structure.Path{"source_code.go"},
-					)
-					return mock
-				}(),
 			},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			impl := Constructor{
-				YamlReader:       tt.fields.YamlReader,
 				TemplateReader:   tt.fields.TemplateReader,
 				SourceCodeReader: tt.fields.SourceCodeReader,
 				FileWriter:       tt.fields.FileWriter,
-				FilePathFetcher:  tt.fields.FilePathFetcher,
 			}
 			impl.Generate()
 		})
