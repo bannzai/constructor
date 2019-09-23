@@ -28,7 +28,6 @@ var setupCmd = &cobra.Command{
 	`,
 	Run: func(command *cobra.Command, args []string) {
 		generator.Template{}.Setup()
-		generator.Yaml{}.Setup()
 	},
 }
 
