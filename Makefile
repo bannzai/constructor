@@ -23,7 +23,6 @@ delete:
 reset: delete setup
 
 dependency:
-	go mod vendor
 	go mod download
 
 update-dependency:
