@@ -23,10 +23,6 @@ func WriteFile(destinationPath string, content string) {
 	fmt.Fprintf(os.Stdout, "Generated %s. \n", destinationPath)
 }
 
-func GoFormat(path string) {
-	// NONE:
-}
-
 func GoImports(path string) {
 	// reference: https://github.com/golang/tools/blob/master/cmd/goimports/goimports.go#L41
 	options := &imports.Options{
