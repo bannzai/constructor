@@ -7,7 +7,6 @@ import (
 )
 
 type Constructor struct {
-	YamlReader       YamlReader
 	TemplateReader   TemplateReader
 	SourceCodeReader SourceCodeReader
 	FileWriter       Writer
@@ -15,10 +14,9 @@ type Constructor struct {
 }
 
 func (impl Constructor) Generate() {
-	yaml := impl.YamlReader.Read()
 	generateSources := []generateComponent{}
 
-	for _, definition := range definitions(yaml) {
+	for _, definition := range []structure.Definition{} {
 		templates := []*template.Template{}
 		for _, path := range templateFilePaths(definition) {
 			templates = append(templates, impl.TemplateReader.Read(path))

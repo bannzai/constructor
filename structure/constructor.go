@@ -52,12 +52,3 @@ func NewDefinitionStructure(
 		TemplateFilePaths: templateFilePaths,
 	}
 }
-
-// NewYamlStructure insitanciate Yaml
-func NewYamlStructure(
-	definitions []Definition,
-) Yaml {
-	return Yaml{
-		Definitions: definitions,
-	}
-}
