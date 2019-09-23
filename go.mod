@@ -1,4 +1,4 @@
-module github.com/constructor
+module github.com/bannzai/constructor
 
 go 1.12
 
