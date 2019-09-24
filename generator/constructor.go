@@ -2,9 +2,6 @@ package generator
 
 import (
 	"bytes"
-	"html/template"
-
-	"github.com/bannzai/constructor/structure"
 )
 
 type Constructor struct {
@@ -13,27 +10,17 @@ type Constructor struct {
 	FileWriter
 }
 
-func (generator Constructor) Generate() {
-
-}
-
-func (generator Constructor) content(
-	packageName string,
-	template *template.Template,
-	sourceCodes []structure.Code,
-	destinationPath structure.Path,
-) string {
-	structs := []structure.Struct{}
-	for _, sourceCode := range sourceCodes {
-		structs = append(structs, sourceCode.Structs...)
-	}
+func (generator Constructor) Generate(sourcePath, destinationPath string) {
+	templateExecutor := generator.TemplateReader.Read(sourcePath)
+	sourceCode := generator.SourceCodeReader.Read(sourcePath)
 
 	buf := &bytes.Buffer{}
-	if err := template.Execute(buf, map[string]interface{}{
-		"Package": packageName,
-		"Structs": structs,
+	if err := templateExecutor.Execute(buf, map[string]interface{}{
+		"Structs": sourceCode.Structs,
 	}); err != nil {
 		panic(err)
 	}
-	return buf.String()
+
+	content := buf.String()
+	generator.FileWriter.Write(destinationPath, content)
 }
