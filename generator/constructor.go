@@ -1,10 +1,11 @@
 package generator
 
 type Constructor struct {
-	TemplateReader   TemplateReader
-	SourceCodeReader SourceCodeReader
-	FileWriter       Writer
+	TemplateReader
+	SourceCodeReader
+	FileWriter
 }
 
 func (impl Constructor) Generate() {
+
 }

@@ -5,13 +5,13 @@ import (
 	"github.com/bannzai/constructor/structure"
 )
 
-type Writer interface {
+type FileWriter interface {
 	Write(destinationPath structure.Path, content string)
 }
 
-type FileWriter struct{}
+type FileWriterImpl struct{}
 
-func (FileWriter) Write(destinationPath structure.Path, content string) {
+func (FileWriterImpl) Write(destinationPath structure.Path, content string) {
 	file.WriteFile(destinationPath, content)
 	file.GoImports(destinationPath)
 }
