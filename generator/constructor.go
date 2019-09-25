@@ -2,6 +2,8 @@ package generator
 
 import (
 	"bytes"
+
+	"github.com/bannzai/constructor/structure"
 )
 
 type Constructor struct {
@@ -10,9 +12,14 @@ type Constructor struct {
 	FileWriter
 }
 
-func (generator Constructor) Generate(sourcePath, destinationPath string) {
+func (generator Constructor) Generate(sourcePath, destinationPath string, typeName string) {
 	templateExecutor := generator.TemplateReader.Read(sourcePath)
-	sourceCode := generator.SourceCodeReader.Read(sourcePath)
+	var sourceCode structure.Code
+	if len(typeName) > 0 {
+		sourceCode = generator.SourceCodeReader.ReadWithType(sourcePath, typeName)
+	} else {
+		sourceCode = generator.SourceCodeReader.Read(sourcePath)
+	}
 
 	buf := &bytes.Buffer{}
 	if err := templateExecutor.Execute(buf, map[string]interface{}{
