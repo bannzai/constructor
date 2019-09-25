@@ -7,7 +7,7 @@ import (
 type Code struct{}
 
 func (impl Code) Read(filePath structure.Path, ignoreFieldNames []string) structure.Code {
-	return impl.ReadWithType(filePath, ignoreFieldNames, "")
+	return impl.ReadWithType(filePath, "", ignoreFieldNames)
 }
 
 func (impl Code) ReadWithType(filePath structure.Path, generatedTypeName string, ignoreFieldNames []string) (code structure.Code) {

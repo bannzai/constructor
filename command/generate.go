@@ -15,6 +15,8 @@
 package command
 
 import (
+	"strings"
+
 	"github.com/bannzai/constructor/generator"
 	"github.com/bannzai/constructor/reader"
 	"github.com/spf13/cobra"
@@ -43,16 +45,29 @@ constructor generate [/path/to/package] [-c(--config) constructor.yaml].
 }
 
 func generate() {
+	ignoreFieldNames := []string{}
+	if len(generateOptions.ignoreFields) > 0 {
+		for _, splited := range strings.Split(generateOptions.ignoreFields, ",") {
+			ignoreFieldNames = append(ignoreFieldNames, strings.Trim(splited, " "))
+		}
+	}
+
 	generator.Constructor{
 		TemplateReader:   reader.Template{},
 		SourceCodeReader: reader.Code{},
 		FileWriter:       generator.FileWriterImpl{},
-	}.Generate(generateOptions.sourceFilePath, generateOptions.destinationFilePath, generateOptions.structType)
+	}.Generate(
+		generateOptions.templateFilePath,
+		generateOptions.sourceFilePath,
+		generateOptions.destinationFilePath,
+		generateOptions.structType,
+		ignoreFieldNames,
+	)
 }
 
 func init() {
 	rootCmd.AddCommand(generateCmd)
-	generateCmd.Flags().StringVarP(&generateOptions.structType, "type", "", "", "Specify struct about generated constructor function. It is list with commas. (e.g User,Item,Locale")
+	generateCmd.Flags().StringVarP(&generateOptions.structType, "type", "", "", "Specify struct about generated constructor function.")
 	generateCmd.Flags().StringVarP(&generateOptions.sourceFilePath, "source", "", "", "Source go file path")
 	generateCmd.Flags().StringVarP(&generateOptions.destinationFilePath, "destination", "", "", "Destination go file path")
 	generateCmd.Flags().StringVarP(&generateOptions.ignoreFields, "ignoreFields", "", "", "Not contains generated fields. It is list with commas. (e.g id,name,age")
