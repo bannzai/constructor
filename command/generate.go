@@ -46,8 +46,8 @@ func generate() {
 	generator.Constructor{
 		TemplateReader:   reader.Template{},
 		SourceCodeReader: reader.Code{},
-		FileWriter:       generator.FileWriter{},
-	}.Generate()
+		FileWriter:       generator.FileWriterImpl{},
+	}.Generate(generateOptions.sourceFilePath, generateOptions.destinationFilePath, generateOptions.structType)
 }
 
 func init() {
