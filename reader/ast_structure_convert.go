@@ -24,7 +24,7 @@ func convert(typeName string, astStruct *ast.StructType) structure.Struct {
 			return true
 		}
 
-		if hasIgnoreTag(field) {
+		if shouldNotgGenerate(field) {
 			return true
 		}
 
@@ -157,13 +157,13 @@ func convert(typeName string, astStruct *ast.StructType) structure.Struct {
 	}
 }
 
-func hasIgnoreTag(field *ast.Field) bool {
+func shouldNotgGenerate(field *ast.Field) bool {
 	if field.Tag == nil {
 		return false
 	}
 
 	separator := ":"
-	annotation := structure.IgnoreCaseKeyword + separator
+	annotation := structure.TagKeyword + separator
 	if !strings.Contains(field.Tag.Value, annotation) {
 		return false
 	}
