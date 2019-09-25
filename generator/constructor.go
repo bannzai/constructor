@@ -12,13 +12,13 @@ type Constructor struct {
 	FileWriter
 }
 
-func (generator Constructor) Generate(sourcePath, destinationPath string, typeName string) {
-	templateExecutor := generator.TemplateReader.Read(sourcePath)
+func (generator Constructor) Generate(templatePath, sourcePath, destinationPath string, typeName string, ignoreFieldNames []string) {
+	templateExecutor := generator.TemplateReader.Read(templatePath)
 	var sourceCode structure.Code
 	if len(typeName) > 0 {
-		sourceCode = generator.SourceCodeReader.ReadWithType(sourcePath, typeName)
+		sourceCode = generator.SourceCodeReader.ReadWithType(sourcePath, typeName, ignoreFieldNames)
 	} else {
-		sourceCode = generator.SourceCodeReader.Read(sourcePath)
+		sourceCode = generator.SourceCodeReader.Read(sourcePath, ignoreFieldNames)
 	}
 
 	buf := &bytes.Buffer{}
