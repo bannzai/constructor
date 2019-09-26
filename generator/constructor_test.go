@@ -21,36 +21,26 @@ const testTemplate = "package {{.Package}}\n" +
 func TestConstructor_Generate(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	type fields struct {
-		YamlReader       YamlReader
-		TemplateReader   TemplateReader
-		SourceCodeReader SourceCodeReader
-		FileWriter       Writer
-		FilePathFetcher  FilePathFetcher
+		TemplateReader
+		SourceCodeReader
+		FileWriter
+	}
+	type args struct {
+		sourcePath       string
+		destinationPath  string
+		templatePath     string
+		typeName         string
+		ignoreFieldNames []string
+		packageName      string
 	}
 	tests := []struct {
 		name   string
 		fields fields
+		args
 	}{
 		{
-			name: "Successfully generate constructor function",
+			name: "Successfully generate constructor function when not specify type name",
 			fields: fields{
-				YamlReader: func() YamlReader {
-					mock := NewYamlReaderMock(ctrl)
-					mock.EXPECT().Read().Return(
-						structure.Yaml{
-							Definitions: []structure.Definition{
-								structure.Definition{
-									Package:           "abcd",
-									SourcePath:        "source_code.go",
-									IgnoredPaths:      []structure.Path{},
-									TemplateFilePaths: []structure.Path{"template.tpl"},
-									DestinationPath:   "destination.go",
-								},
-							},
-						},
-					)
-					return mock
-				}(),
 				TemplateReader: func() TemplateReader {
 					mock := NewTemplateReaderMock(ctrl)
 					mock.EXPECT().Read("template.tpl").Return(
@@ -59,8 +49,8 @@ func TestConstructor_Generate(t *testing.T) {
 					return mock
 				}(),
 				SourceCodeReader: func() SourceCodeReader {
-					mock := NewSourceCodeReaderMock(ctrl)
-					mock.EXPECT().Read("source_code.go").Return(
+					mock := NewMockSourceCodeReader(ctrl)
+					mock.EXPECT().Read("source_code.go", []string{}).Return(
 						structure.Code{
 							FilePath: "source_code.go",
 							Structs: []structure.Struct{
@@ -87,7 +77,7 @@ func TestConstructor_Generate(t *testing.T) {
 					)
 					return mock
 				}(),
-				FileWriter: func() Writer {
+				FileWriter: func() FileWriter {
 					expect := "package abcd\n" +
 						"\n" +
 						"struct X {\n" +
@@ -101,26 +91,76 @@ func TestConstructor_Generate(t *testing.T) {
 					mock.EXPECT().Write("destination.go", expect)
 					return mock
 				}(),
-				FilePathFetcher: func() FilePathFetcher {
-					mock := NewFilePathFetcherMock(ctrl)
-					mock.EXPECT().sourceFilePaths(gomock.Any()).Return(
-						[]structure.Path{"source_code.go"},
+			},
+			args: args{
+				sourcePath:       "source_code.go",
+				destinationPath:  "destination.go",
+				templatePath:     "template.tpl",
+				typeName:         "",
+				ignoreFieldNames: []string{},
+				packageName:      "abcd",
+			},
+		},
+		{
+			name: "Successfully generate constructor function when specify type name",
+			fields: fields{
+				TemplateReader: func() TemplateReader {
+					mock := NewTemplateReaderMock(ctrl)
+					mock.EXPECT().Read("template.tpl").Return(
+						template.Must(template.New("template.tpl").Parse(testTemplate)),
 					)
 					return mock
 				}(),
+				SourceCodeReader: func() SourceCodeReader {
+					mock := NewMockSourceCodeReader(ctrl)
+					mock.EXPECT().ReadWithType("source_code.go", "X", []string{}).Return(
+						structure.Code{
+							FilePath: "source_code.go",
+							Structs: []structure.Struct{
+								structure.Struct{
+									Name: "X",
+									Fields: []structure.Field{
+										structure.Field{
+											Name: "Field",
+											Type: "int",
+										},
+									},
+								},
+							},
+						},
+					)
+					return mock
+				}(),
+				FileWriter: func() FileWriter {
+					expect := "package abcd\n" +
+						"\n" +
+						"struct X {\n" +
+						"	Field int\n" +
+						"}\n"
+
+					mock := NewWriterMock(ctrl)
+					mock.EXPECT().Write("destination.go", expect)
+					return mock
+				}(),
+			},
+			args: args{
+				sourcePath:       "source_code.go",
+				destinationPath:  "destination.go",
+				templatePath:     "template.tpl",
+				typeName:         "X",
+				ignoreFieldNames: []string{},
+				packageName:      "abcd",
 			},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			impl := Constructor{
-				YamlReader:       tt.fields.YamlReader,
 				TemplateReader:   tt.fields.TemplateReader,
 				SourceCodeReader: tt.fields.SourceCodeReader,
 				FileWriter:       tt.fields.FileWriter,
-				FilePathFetcher:  tt.fields.FilePathFetcher,
 			}
-			impl.Generate()
+			impl.Generate(tt.args.sourcePath, tt.args.destinationPath, tt.args.templatePath, tt.args.typeName, tt.args.ignoreFieldNames, tt.args.packageName)
 		})
 	}
 }

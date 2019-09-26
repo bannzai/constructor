@@ -2,6 +2,8 @@ package testdata
 
 import "io"
 
+// referenced playground: https://play.golang.org/p/NROZdl65DlM
+type XXX interface{}
 type Alias string
 type Struct struct {
 	P    string
@@ -14,5 +16,6 @@ type Struct struct {
 	MKO  map[io.Writer]bool
 	MVO  map[string]io.Writer
 	MKVO map[io.Writer]io.Writer
-	I    string `ignore_constructor:true`
+	I    string
+	XXX
 }

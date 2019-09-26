@@ -35,29 +35,3 @@ func NewStructStructure(
 		Name:   name,
 	}
 }
-
-// NewDefinitionStructure insitanciate Definition
-func NewDefinitionStructure(
-	destinationPath Path,
-	ignoredPaths []Path,
-	_package string,
-	sourcePath Path,
-	templateFilePaths []Path,
-) Definition {
-	return Definition{
-		DestinationPath:   destinationPath,
-		IgnoredPaths:      ignoredPaths,
-		Package:           _package,
-		SourcePath:        sourcePath,
-		TemplateFilePaths: templateFilePaths,
-	}
-}
-
-// NewYamlStructure insitanciate Yaml
-func NewYamlStructure(
-	definitions []Definition,
-) Yaml {
-	return Yaml{
-		Definitions: definitions,
-	}
-}

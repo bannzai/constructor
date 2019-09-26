@@ -15,6 +15,9 @@
 package command
 
 import (
+	"fmt"
+	"strings"
+
 	"github.com/bannzai/constructor/generator"
 	"github.com/bannzai/constructor/reader"
 	"github.com/bannzai/constructor/structure"
@@ -22,7 +25,12 @@ import (
 )
 
 type GenerateOptions struct {
-	yamlFilePath string
+	sourceFilePath      string
+	destinationFilePath string
+	templateFilePath    string
+	structType          string
+	ignoreFields        string
+	packageName         string
 }
 
 var generateOptions = GenerateOptions{}
@@ -31,29 +39,46 @@ var generateOptions = GenerateOptions{}
 var generateCmd = &cobra.Command{
 	Use:   "generate",
 	Short: "generate constructor functions",
-	Long: `When use "generate" command, some constructor functions are generated.
-constructor generate [/path/to/package] [-c(--config) constructor.yaml].
-`,
+	Long:  `constructor can be add constructor functions for each go struct. `,
 	Run: func(command *cobra.Command, args []string) {
-		generate(generateOptions.yamlFilePath)
+		generate()
 	},
 }
 
-func generate(yamlFilePath string) {
+func generate() {
+	ignoreFieldNames := []string{}
+	if len(generateOptions.ignoreFields) > 0 {
+		for _, splited := range strings.Split(generateOptions.ignoreFields, ",") {
+			ignoreFieldNames = append(ignoreFieldNames, strings.Trim(splited, " "))
+		}
+	}
+
 	generator.Constructor{
-		YamlReader: reader.Yaml{
-			Argument: structure.Argument{
-				YamlPath: yamlFilePath,
-			},
-		},
 		TemplateReader:   reader.Template{},
 		SourceCodeReader: reader.Code{},
-		FileWriter:       generator.FileWriter{},
-		FilePathFetcher:  generator.Glob{},
-	}.Generate()
+		FileWriter:       generator.FileWriterImpl{},
+	}.Generate(
+		generateOptions.sourceFilePath,
+		generateOptions.destinationFilePath,
+		generateOptions.templateFilePath,
+		generateOptions.structType,
+		ignoreFieldNames,
+		generateOptions.packageName,
+	)
 }
 
 func init() {
 	rootCmd.AddCommand(generateCmd)
-	generateCmd.Flags().StringVarP(&generateOptions.yamlFilePath, "configure", "c", structure.YamlFilePathName, "Specify configure file")
+	generateCmd.Flags().StringVar(&generateOptions.sourceFilePath, "source", "", "Source go file path")
+	generateCmd.Flags().StringVar(&generateOptions.destinationFilePath, "destination", "", "Destination go file path")
+	generateCmd.Flags().StringVar(&generateOptions.templateFilePath, "template", structure.TemplateFileName, fmt.Sprintf("Constructor functions format template file path. Default is ./%s", structure.TemplateFileName))
+	generateCmd.Flags().StringVar(&generateOptions.structType, "type", "", "Specify struct about generated constructor function.")
+	generateCmd.Flags().StringVar(&generateOptions.ignoreFields, "ignoreFields", "", "Not contains generated fields. It is list with commas. (e.g id,name,age")
+	generateCmd.Flags().StringVar(&generateOptions.packageName, "package", "", "Package name for generated constructor.")
+	requiredFlags := []string{"source", "destination", "package"}
+	for _, name := range requiredFlags {
+		if err := generateCmd.MarkFlagRequired(name); err != nil {
+			panic(err)
+		}
+	}
 }

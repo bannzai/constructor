@@ -4,14 +4,13 @@ import (
 	"fmt"
 	"go/ast"
 	"reflect"
-	"strings"
 
 	"github.com/bannzai/constructor/structure"
 )
 
 type TypeAndNames = map[string][]string
 
-func convert(typeName string, astStruct *ast.StructType) structure.Struct {
+func convert(typeName string, ignoreFieldNames []string, astStruct *ast.StructType) structure.Struct {
 	typeAndNames := TypeAndNames{}
 	ast.Inspect(astStruct, func(node ast.Node) bool {
 		lastChildNode := node == nil
@@ -24,17 +23,30 @@ func convert(typeName string, astStruct *ast.StructType) structure.Struct {
 			return true
 		}
 
-		if hasIgnoreTag(field) {
-			return true
-		}
-
 		switch types := field.Type.(type) {
 		case *ast.Ident:
-			fieldTypeName := types.Name
-			for _, nameIdentifier := range field.Names {
-				name := nameIdentifier.Name
-				typeAndNames[fieldTypeName] = append(typeAndNames[fieldTypeName], name)
+			if len(field.Names) == 0 {
+				/*
+					type xxx interface {}
+					type A struct {
+						 xxx
+					}
+				*/
+				name := types.Name
+				typeAndNames[name] = append(typeAndNames[name], name)
+			} else {
+				/*
+					type A struct {
+						 iiii int
+					}
+				*/
+				fieldTypeName := types.Name
+				for _, nameIdentifier := range field.Names {
+					name := nameIdentifier.Name
+					typeAndNames[fieldTypeName] = append(typeAndNames[fieldTypeName], name)
+				}
 			}
+
 		case *ast.ArrayType:
 			var fieldTypeName string
 			if selector, ok := types.Elt.(*ast.SelectorExpr); ok {
@@ -142,6 +154,9 @@ func convert(typeName string, astStruct *ast.StructType) structure.Struct {
 	fields := []structure.Field{}
 	for fieldType, names := range typeAndNames {
 		for _, name := range names {
+			if shouldNotGenerate(name, ignoreFieldNames) {
+				continue
+			}
 			fields = append(fields, structure.Field{
 				Name: name,
 				Type: fieldType,
@@ -157,19 +172,13 @@ func convert(typeName string, astStruct *ast.StructType) structure.Struct {
 	}
 }
 
-func hasIgnoreTag(field *ast.Field) bool {
-	if field.Tag == nil {
-		return false
+func shouldNotGenerate(field string, ignoreFields []string) bool {
+	for _, ignore := range ignoreFields {
+		if ignore == field {
+			return true
+		}
 	}
-
-	separator := ":"
-	annotation := structure.IgnoreCaseKeyword + separator
-	if !strings.Contains(field.Tag.Value, annotation) {
-		return false
-	}
-
-	head := "`" + annotation
-	return field.Tag.Value[len(head):len(head)+len("true")] == "true" // FIXME: Good code
+	return false
 }
 
 func parseSelectorExpr(types *ast.SelectorExpr) (string, string) {

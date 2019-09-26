@@ -13,8 +13,9 @@ test-verbose:
 setup: 
 	constructor setup
 
-dry-run:
-	constructor generate
+dry-run: install
+	constructor generate --source structure/code.go --destination structure/code.constructor.go --package structure
+	go generate ./...
 
 delete:
 	rm -f ./constructor.yaml ./constructor.tpl
