@@ -39,9 +39,7 @@ var generateOptions = GenerateOptions{}
 var generateCmd = &cobra.Command{
 	Use:   "generate",
 	Short: "generate constructor functions",
-	Long: `When use "generate" command, some constructor functions are generated.
-constructor generate [/path/to/package] [-c(--config) constructor.yaml].
-`,
+	Long:  `constructor can be add constructor functions for each go struct. `,
 	Run: func(command *cobra.Command, args []string) {
 		generate()
 	},
