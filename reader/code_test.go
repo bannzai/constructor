@@ -66,8 +66,8 @@ func Test_parseASTStructs(t *testing.T) {
 
 func TestCode_Read(t *testing.T) {
 	type args struct {
-		filePath        string
-		ignoreFileNames []string
+		filePath         string
+		ignoreFieldNames []string
 	}
 	tests := []struct {
 		name string
@@ -77,8 +77,8 @@ func TestCode_Read(t *testing.T) {
 		{
 			name: "Successfully read go file.",
 			args: args{
-				filePath:        testdataStructPath,
-				ignoreFileNames: []string{"I"},
+				filePath:         testdataStructPath,
+				ignoreFieldNames: []string{"I"},
 			},
 			want: structure.Code{
 				FilePath: testdataStructPath,
@@ -135,7 +135,7 @@ func TestCode_Read(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			impl := Code{}
-			got := impl.Read(tt.args.filePath, tt.args.ignoreFileNames)
+			got := impl.Read(tt.args.filePath, tt.args.ignoreFieldNames)
 			if !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("Read() = %v,\n want %v", got, tt.want)
 			}
@@ -155,7 +155,7 @@ func TestCode_ReadWithType(t *testing.T) {
 		args     args
 		wantCode structure.Code
 	}{
-		// TODO: Add test cases.
+		// TODO:
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
