@@ -39,5 +39,5 @@ func upperCamelCase(target string) string {
 }
 
 func (impl Template) Read(filePath structure.Path) *template.Template {
-	return template.Must(template.New(filePath).Funcs(functions).ParseFiles(filePath))
+	return template.Must(template.New("constructor").Funcs(functions).ParseFiles(filePath))
 }
