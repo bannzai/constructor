@@ -14,7 +14,9 @@ setup:
 	constructor setup
 
 dry-run:
-	constructor generate
+	constructor generate --source structure/code.go --destination structure/code.constructor.go
+generate:
+	go generate ./...
 
 delete:
 	rm -f ./constructor.yaml ./constructor.tpl
