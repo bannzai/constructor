@@ -25,11 +25,28 @@ func convert(typeName string, ignoreFieldNames []string, astStruct *ast.StructTy
 
 		switch types := field.Type.(type) {
 		case *ast.Ident:
-			fieldTypeName := types.Name
-			for _, nameIdentifier := range field.Names {
-				name := nameIdentifier.Name
-				typeAndNames[fieldTypeName] = append(typeAndNames[fieldTypeName], name)
+			if len(field.Names) == 0 {
+				/*
+					type xxx interface {}
+					type A struct {
+						 xxx
+					}
+				*/
+				name := types.Name
+				typeAndNames[name] = append(typeAndNames[name], name)
+			} else {
+				/*
+					type A struct {
+						 iiii int
+					}
+				*/
+				fieldTypeName := types.Name
+				for _, nameIdentifier := range field.Names {
+					name := nameIdentifier.Name
+					typeAndNames[fieldTypeName] = append(typeAndNames[fieldTypeName], name)
+				}
 			}
+
 		case *ast.ArrayType:
 			var fieldTypeName string
 			if selector, ok := types.Elt.(*ast.SelectorExpr); ok {
