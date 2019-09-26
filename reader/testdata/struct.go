@@ -2,6 +2,7 @@ package testdata
 
 import "io"
 
+type XXX interface{}
 type Alias string
 type Struct struct {
 	P    string
@@ -15,4 +16,5 @@ type Struct struct {
 	MVO  map[string]io.Writer
 	MKVO map[io.Writer]io.Writer
 	I    string
+	XXX
 }

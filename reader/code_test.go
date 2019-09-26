@@ -127,6 +127,10 @@ func TestCode_Read(t *testing.T) {
 								Name: "P",
 								Type: "string",
 							},
+							structure.Field{
+								Name: "XXX",
+								Type: "XXX",
+							},
 						},
 					},
 				},
