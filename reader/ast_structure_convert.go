@@ -28,9 +28,6 @@ func convert(typeName string, ignoreFieldNames []string, astStruct *ast.StructTy
 			fieldTypeName := types.Name
 			for _, nameIdentifier := range field.Names {
 				name := nameIdentifier.Name
-				if shouldNotGenerate(name, ignoreFieldNames) {
-					continue
-				}
 				typeAndNames[fieldTypeName] = append(typeAndNames[fieldTypeName], name)
 			}
 		case *ast.ArrayType:
@@ -47,9 +44,6 @@ func convert(typeName string, ignoreFieldNames []string, astStruct *ast.StructTy
 			}
 			for _, nameIdentifier := range field.Names {
 				name := nameIdentifier.Name
-				if shouldNotGenerate(name, ignoreFieldNames) {
-					continue
-				}
 				typeAndNames[fieldTypeName] = append(typeAndNames[fieldTypeName], name)
 			}
 		case *ast.MapType:
@@ -143,6 +137,9 @@ func convert(typeName string, ignoreFieldNames []string, astStruct *ast.StructTy
 	fields := []structure.Field{}
 	for fieldType, names := range typeAndNames {
 		for _, name := range names {
+			if shouldNotGenerate(name, ignoreFieldNames) {
+				continue
+			}
 			fields = append(fields, structure.Field{
 				Name: name,
 				Type: fieldType,
