@@ -1,4 +1,4 @@
-//go:generate constructor --source=$GOFILE --destination=$GOPATH/src/github.com/bannzai/constructor/reader/code.constructor.go --package=$GOPACKAGE
+//go:generate constructor generate --source=$GOFILE --destination=$GOPATH/src/github.com/bannzai/constructor/reader/code.constructor.go --package=$GOPACKAGE --template=$GOPATH/src/github.com/bannzai/constructor/constructor.tpl
 package reader
 
 import (
