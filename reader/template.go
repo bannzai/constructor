@@ -2,6 +2,7 @@ package reader
 
 import (
 	"html/template"
+	"path/filepath"
 	"strings"
 
 	"github.com/bannzai/constructor/structure"
@@ -39,5 +40,5 @@ func upperCamelCase(target string) string {
 }
 
 func (impl Template) Read(filePath structure.Path) *template.Template {
-	return template.Must(template.New("constructor").Funcs(functions).ParseFiles(filePath))
+	return template.Must(template.New(filepath.Base(filePath)).Funcs(functions).ParseFiles(filePath))
 }
