@@ -142,3 +142,50 @@ func Test_parseASTStructs(t *testing.T) {
 		})
 	}
 }
+
+func TestCode_Read(t *testing.T) {
+	type args struct {
+		filePath         structure.Path
+		ignoreFieldNames []string
+	}
+	tests := []struct {
+		name string
+		impl Code
+		args args
+		want structure.Code
+	}{
+		// TODO: Add test cases.
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			impl := Code{}
+			if got := impl.Read(tt.args.filePath, tt.args.ignoreFieldNames); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("Code.Read() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestCode_ReadWithType(t *testing.T) {
+	type args struct {
+		filePath          structure.Path
+		generatedTypeName string
+		ignoreFieldNames  []string
+	}
+	tests := []struct {
+		name     string
+		impl     Code
+		args     args
+		wantCode structure.Code
+	}{
+		// TODO: Add test cases.
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			impl := Code{}
+			if gotCode := impl.ReadWithType(tt.args.filePath, tt.args.generatedTypeName, tt.args.ignoreFieldNames); !reflect.DeepEqual(gotCode, tt.wantCode) {
+				t.Errorf("Code.ReadWithType() = %v, want %v", gotCode, tt.wantCode)
+			}
+		})
+	}
+}
