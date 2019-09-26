@@ -13,7 +13,8 @@ const testdataStructPath = testdataPath + "struct.go"
 
 func TestCodeImpl_Read(t *testing.T) {
 	type args struct {
-		FilePath string
+		filePath        string
+		ignoreFileNames []string
 	}
 	tests := []struct {
 		name string
@@ -23,7 +24,8 @@ func TestCodeImpl_Read(t *testing.T) {
 		{
 			name: "Successfully read go file.",
 			args: args{
-				FilePath: testdataStructPath,
+				filePath:        testdataStructPath,
+				ignoreFileNames: []string{"I"},
 			},
 			want: structure.Code{
 				FilePath: testdataStructPath,
@@ -80,7 +82,7 @@ func TestCodeImpl_Read(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			impl := Code{}
-			got := impl.Read(tt.args.FilePath)
+			got := impl.Read(tt.args.filePath, tt.args.ignoreFileNames)
 			if !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("Read() = %v,\n want %v", got, tt.want)
 			}

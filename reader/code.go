@@ -14,8 +14,10 @@ func (impl Code) ReadWithType(filePath structure.Path, generatedTypeName string,
 	code.FilePath = filePath
 	isNotSpecifyType := 0 == len(generatedTypeName)
 	for typeName, structure := range parseASTStructs(parseASTFile(code.FilePath)) {
-		if isNotSpecifyType || typeName != generatedTypeName {
-			continue
+		if !isNotSpecifyType {
+			if typeName != generatedTypeName {
+				continue
+			}
 		}
 		code.Structs = append(code.Structs, convert(typeName, ignoreFieldNames, structure))
 	}
