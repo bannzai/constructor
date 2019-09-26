@@ -23,12 +23,14 @@ import (
 // rootCmd represents the root command
 var rootCmd = &cobra.Command{
 	Use:   "construtor",
-	Short: "constructor can be generated constructor function for each struct",
+	Short: "[constructor] can be generated constructor function for each struct",
 	Long: `
 This application is a tool to generate constructor functions for each struct quickly.
-When you execute "constructor generate [/path/to/package]", It is generating constructor functions under the package.
-And you can edit "./constructor.yaml", If you customize generate files. (e.g you wanna ignore files for "constructor generate")
-You get "./constructor.yaml" to execute "constructor setup".
+When you execute "constructor generate [flags]", 
+It is generating constructor functions under the package.
+You get "./constructor.tpl" via to execute "constructor setup". 
+This is default template for [constructor]. 
+You can edit this template, If you customize generated files and pass it.
 `,
 	Args: cobra.MinimumNArgs(1),
 	Run: func(command *cobra.Command, args []string) {
