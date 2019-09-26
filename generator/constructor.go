@@ -12,7 +12,7 @@ type Constructor struct {
 	FileWriter
 }
 
-func (generator Constructor) Generate(templatePath, sourcePath, destinationPath string, typeName string, ignoreFieldNames []string) {
+func (generator Constructor) Generate(sourcePath, destinationPath, templatePath string, typeName string, ignoreFieldNames []string, packageName string) {
 	templateExecutor := generator.TemplateReader.Read(templatePath)
 	var sourceCode structure.Code
 	if len(typeName) > 0 {
@@ -24,6 +24,7 @@ func (generator Constructor) Generate(templatePath, sourcePath, destinationPath 
 	buf := &bytes.Buffer{}
 	if err := templateExecutor.Execute(buf, map[string]interface{}{
 		"Structs": sourceCode.Structs,
+		"Package": packageName,
 	}); err != nil {
 		panic(err)
 	}

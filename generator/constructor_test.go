@@ -21,9 +21,9 @@ const testTemplate = "package {{.Package}}\n" +
 func TestConstructor_Generate(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	type fields struct {
-		TemplateReader   TemplateReader
-		SourceCodeReader SourceCodeReader
-		FileWriter       Writer
+		TemplateReader
+		SourceCodeReader
+		FileWriter
 	}
 	tests := []struct {
 		name   string
@@ -40,8 +40,8 @@ func TestConstructor_Generate(t *testing.T) {
 					return mock
 				}(),
 				SourceCodeReader: func() SourceCodeReader {
-					mock := NewSourceCodeReaderMock(ctrl)
-					mock.EXPECT().Read("source_code.go").Return(
+					mock := NewMockSourceCodeReader(ctrl)
+					mock.EXPECT().Read("source_code.go", []string{}).Return(
 						structure.Code{
 							FilePath: "source_code.go",
 							Structs: []structure.Struct{
@@ -68,7 +68,7 @@ func TestConstructor_Generate(t *testing.T) {
 					)
 					return mock
 				}(),
-				FileWriter: func() Writer {
+				FileWriter: func() FileWriter {
 					expect := "package abcd\n" +
 						"\n" +
 						"struct X {\n" +
@@ -92,7 +92,7 @@ func TestConstructor_Generate(t *testing.T) {
 				SourceCodeReader: tt.fields.SourceCodeReader,
 				FileWriter:       tt.fields.FileWriter,
 			}
-			impl.Generate()
+			impl.Generate("source_code.go", "destination.go", "template.tpl", "", []string{}, "abcd")
 		})
 	}
 }

@@ -23,11 +23,12 @@ import (
 )
 
 type GenerateOptions struct {
-	structType          string
 	sourceFilePath      string
 	destinationFilePath string
-	ignoreFields        string
 	templateFilePath    string
+	structType          string
+	ignoreFields        string
+	packageName         string
 }
 
 var generateOptions = GenerateOptions{}
@@ -57,19 +58,21 @@ func generate() {
 		SourceCodeReader: reader.Code{},
 		FileWriter:       generator.FileWriterImpl{},
 	}.Generate(
-		generateOptions.templateFilePath,
 		generateOptions.sourceFilePath,
 		generateOptions.destinationFilePath,
+		generateOptions.templateFilePath,
 		generateOptions.structType,
 		ignoreFieldNames,
+		generateOptions.packageName,
 	)
 }
 
 func init() {
 	rootCmd.AddCommand(generateCmd)
-	generateCmd.Flags().StringVarP(&generateOptions.structType, "type", "", "", "Specify struct about generated constructor function.")
 	generateCmd.Flags().StringVarP(&generateOptions.sourceFilePath, "source", "", "", "Source go file path")
 	generateCmd.Flags().StringVarP(&generateOptions.destinationFilePath, "destination", "", "", "Destination go file path")
-	generateCmd.Flags().StringVarP(&generateOptions.ignoreFields, "ignoreFields", "", "", "Not contains generated fields. It is list with commas. (e.g id,name,age")
 	generateCmd.Flags().StringVarP(&generateOptions.templateFilePath, "tempalte", "", "", "Constructor functions format template file path")
+	generateCmd.Flags().StringVarP(&generateOptions.structType, "type", "", "", "Specify struct about generated constructor function.")
+	generateCmd.Flags().StringVarP(&generateOptions.ignoreFields, "ignoreFields", "", "", "Not contains generated fields. It is list with commas. (e.g id,name,age")
+	generateCmd.Flags().StringVarP(&generateOptions.packageName, "package", "", "", "Package name for generated constructor.")
 }
