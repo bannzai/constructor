@@ -15,10 +15,12 @@
 package command
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/bannzai/constructor/generator"
 	"github.com/bannzai/constructor/reader"
+	"github.com/bannzai/constructor/structure"
 	"github.com/spf13/cobra"
 )
 
@@ -71,7 +73,7 @@ func init() {
 	rootCmd.AddCommand(generateCmd)
 	generateCmd.Flags().StringVarP(&generateOptions.sourceFilePath, "source", "", "", "Source go file path")
 	generateCmd.Flags().StringVarP(&generateOptions.destinationFilePath, "destination", "", "", "Destination go file path")
-	generateCmd.Flags().StringVarP(&generateOptions.templateFilePath, "tempalte", "", "", "Constructor functions format template file path")
+	generateCmd.Flags().StringVarP(&generateOptions.templateFilePath, "tempalte", "", "", fmt.Sprintf("Constructor functions format template file path. Default is ./%s", structure.TemplateFileName))
 	generateCmd.Flags().StringVarP(&generateOptions.structType, "type", "", "", "Specify struct about generated constructor function.")
 	generateCmd.Flags().StringVarP(&generateOptions.ignoreFields, "ignoreFields", "", "", "Not contains generated fields. It is list with commas. (e.g id,name,age")
 	generateCmd.Flags().StringVarP(&generateOptions.packageName, "package", "", "", "Package name for generated constructor.")
