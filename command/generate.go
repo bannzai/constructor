@@ -73,7 +73,7 @@ func init() {
 	rootCmd.AddCommand(generateCmd)
 	generateCmd.Flags().StringVarP(&generateOptions.sourceFilePath, "source", "", "", "Source go file path")
 	generateCmd.Flags().StringVarP(&generateOptions.destinationFilePath, "destination", "", "", "Destination go file path")
-	generateCmd.Flags().StringVarP(&generateOptions.templateFilePath, "tempalte", "", "", fmt.Sprintf("Constructor functions format template file path. Default is ./%s", structure.TemplateFileName))
+	generateCmd.Flags().StringVarP(&generateOptions.templateFilePath, "tempalte", "", structure.TemplateFileName, fmt.Sprintf("Constructor functions format template file path. Default is ./%s", structure.TemplateFileName))
 	generateCmd.Flags().StringVarP(&generateOptions.structType, "type", "", "", "Specify struct about generated constructor function.")
 	generateCmd.Flags().StringVarP(&generateOptions.ignoreFields, "ignoreFields", "", "", "Not contains generated fields. It is list with commas. (e.g id,name,age")
 	generateCmd.Flags().StringVarP(&generateOptions.packageName, "package", "", "", "Package name for generated constructor.")
