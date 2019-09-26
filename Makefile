@@ -14,7 +14,7 @@ setup:
 	constructor setup
 
 dry-run:
-	constructor generate --source structure/code.go --destination structure/code.constructor.go
+	constructor generate --source structure/code.go --destination structure/code.constructor.go --package structure
 generate:
 	go generate ./...
 
