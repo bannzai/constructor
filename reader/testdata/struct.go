@@ -2,6 +2,7 @@ package testdata
 
 import "io"
 
+// referenced playground: https://play.golang.org/p/NROZdl65DlM
 type XXX interface{}
 type Alias string
 type Struct struct {
