@@ -10,6 +10,7 @@ import (
 
 const testdataPath = "testdata/"
 const testdataStructPath = testdataPath + "struct.go"
+const testdataForMultipleStructPath = testdataPath + "struct_for_multiple_type.go"
 
 func Test_parseASTFile(t *testing.T) {
 	type args struct {
@@ -150,18 +151,39 @@ func TestCode_ReadWithType(t *testing.T) {
 		ignoreFieldNames  []string
 	}
 	tests := []struct {
-		name     string
-		impl     Code
-		args     args
-		wantCode structure.Code
+		name string
+		impl Code
+		args args
+		want structure.Code
 	}{
-		// TODO:
+		{
+			name: "Successfully read go file with specify type X",
+			args: args{
+				filePath:          testdataForMultipleStructPath,
+				generatedTypeName: "X",
+				ignoreFieldNames:  []string{},
+			},
+			want: structure.Code{
+				FilePath: testdataForMultipleStructPath,
+				Structs: []structure.Struct{
+					structure.Struct{
+						Name: "X",
+						Fields: []structure.Field{
+							structure.Field{
+								Name: "A",
+								Type: "int",
+							},
+						},
+					},
+				},
+			},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			impl := Code{}
-			if gotCode := impl.ReadWithType(tt.args.filePath, tt.args.generatedTypeName, tt.args.ignoreFieldNames); !reflect.DeepEqual(gotCode, tt.wantCode) {
-				t.Errorf("Code.ReadWithType() = %v, want %v", gotCode, tt.wantCode)
+			if gotCode := impl.ReadWithType(tt.args.filePath, tt.args.generatedTypeName, tt.args.ignoreFieldNames); !reflect.DeepEqual(gotCode, tt.want) {
+				t.Errorf("Code.ReadWithType() = %v, want %v", gotCode, tt.want)
 			}
 		})
 	}
