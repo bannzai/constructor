@@ -69,6 +69,12 @@ func generate() {
 
 func init() {
 	rootCmd.AddCommand(generateCmd)
+	requiredFlags := []string{"source", "destination", "package"}
+	for _, name := range requiredFlags {
+		if err := generateCmd.MarkFlagRequired(name); err != nil {
+			panic(err)
+		}
+	}
 	generateCmd.Flags().StringVar(&generateOptions.sourceFilePath, "source", "", "Source go file path")
 	generateCmd.Flags().StringVar(&generateOptions.destinationFilePath, "destination", "", "Destination go file path")
 	generateCmd.Flags().StringVar(&generateOptions.templateFilePath, "tempalte", structure.TemplateFileName, fmt.Sprintf("Constructor functions format template file path. Default is ./%s", structure.TemplateFileName))
