@@ -25,10 +25,10 @@ var rootCmd = &cobra.Command{
 	Use:   "construtor",
 	Short: "[constructor] can be generated constructor function for each struct",
 	Long: `
-This application is a tool to generate constructor functions for each struct quickly.
+[constructor] generate constructor functions for each struct.
 When you execute "constructor generate [flags]", 
-It is generating constructor functions under the package.
-You get "./constructor.tpl" via to execute "constructor setup". 
+get constructor functions under the package.
+You got "./constructor.tpl" after execute "constructor setup". 
 This is default template for [constructor]. 
 You can edit this template, If you customize generated files and pass it.
 `,
